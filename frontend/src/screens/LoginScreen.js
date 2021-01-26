@@ -31,12 +31,12 @@ const LoginScreen = ({ location, history }) => {
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1 style={{textAlign:'center'}}>Login</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='email'>
-                    <Form.Label>Email Address</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                         type='email'
                         placeholder='Enter email'
@@ -56,15 +56,15 @@ const LoginScreen = ({ location, history }) => {
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Sign In
+                    Login
                 </Button>
             </Form>
 
             <Row className='py-3'>
-                <Col>
-                    New Customer?{' '}
+                <Col style={{textAlign:'center'}}>
+                    Pengguna Baru?{' '}
                     <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                        Register
+                        Daftar
                     </Link>
                 </Col>
             </Row>

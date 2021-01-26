@@ -6,8 +6,9 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 
-import ProfileScreen from './screens/ProfileScreen'
 import LoginScreen from './screens/LoginScreen'
+import RegisterScreen from './screens/RegisterScreen'
+import ProfileScreen from './screens/ProfileScreen'
 
 function App() {
   const sidebarShow = useSelector(state => state.sidebarShow)
@@ -22,6 +23,7 @@ function App() {
             {sidebar && <Sidebar />}
             <Col className='py-3'>
                 <Route path='/login' component={LoginScreen} />
+                <Route path='/register' component={RegisterScreen} />
                 <Route path='/' component={ProfileScreen} exact />
             </Col>
           </Row>
