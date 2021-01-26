@@ -1,32 +1,52 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container } from 'react-bootstrap'
+import { showSidebar } from '../actions/sidebarActions'
+import { logout } from '../actions/userActions'
 
 const Header = () => {
-    const [sidebar, setSidebar] = useState(false)
+    const dispatch = useDispatch()
 
-    const showSidebar = () => setSidebar(!sidebar)
+    const sidebarShow = useSelector(state => state.sidebarShow)
+    const { sidebar } = sidebarShow
+
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
+    const showSidebarHandler = () => {
+        dispatch(showSidebar(!sidebar))
+    }
+
+    const logoutHandler = () => {
+        dispatch(logout())
+    }
 
     return (
         <header>
                 <Navbar bg='primary' variant='dark'>
                     <Container fluid>
-                        <LinkContainer to='#'>
-                            <Navbar.Brand onClick={showSidebar}><i className='fas fa-bars'></i></Navbar.Brand>
-                        </LinkContainer>
-
+                        {userInfo && (
+                            <LinkContainer to='#'>
+                                <Navbar.Brand onClick={showSidebarHandler}><i className='fas fa-bars'></i></Navbar.Brand>
+                            </LinkContainer>
+                        )}
                         <LinkContainer to='/'>
                             <Navbar.Brand>Perahu</Navbar.Brand>
                         </LinkContainer>
+                        
                         <Navbar.Toggle aria-controls='basic-navbar-nav' />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="ml-auto">
-                                <LinkContainer to='#/cart'>
-                                    <Nav.Link>Sign Out</Nav.Link>
-                                </LinkContainer>
-                                <LinkContainer to='#/login'>
-                                    <Nav.Link>Sign In</Nav.Link>
-                                </LinkContainer>
+                                {userInfo ? (
+                                    <LinkContainer to='/logout' onClick={logoutHandler}>
+                                        <Nav.Link>Sign Out</Nav.Link>
+                                    </LinkContainer>
+                                ) : (
+                                    <LinkContainer to='/login'>
+                                        <Nav.Link>Sign In</Nav.Link>
+                                    </LinkContainer>
+                                )}
                             </Nav>
                         </Navbar.Collapse>
                     </Container>

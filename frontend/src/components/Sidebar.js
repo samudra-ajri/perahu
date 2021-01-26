@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Row, Col, Nav } from 'react-bootstrap'
-import { sidebarData } from '../Data/sidebarData'
+import { sidebarData } from '../data/sidebarData'
 
 const Sidebar = () => {
     const [activeBar, setActiveBar] = useState('')
