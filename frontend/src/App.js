@@ -1,16 +1,22 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Container } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 import Header from './components/Header'
+import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
-import HomeScreen from './screens/HomeScreen'
+import ProfileScreen from './screens/ProfileScreen'
 
 function App() {
   return (
 		<Router>
 			<Header />
-			<main className='py-3'>
-        <Container>
-          <Route path='/' component={HomeScreen} exact />
+      <main>
+        <Container fluid>
+          <Row>
+            <Sidebar />
+            <Col>
+                <Route path='/' component={ProfileScreen} exact />
+            </Col>
+          </Row>
         </Container>
       </main>
       <Footer />

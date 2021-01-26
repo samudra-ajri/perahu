@@ -1,1 +1,51 @@
-{}
+main {
+  min-height: 80vh;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+.sidebar {
+  background: #15171c;
+  width: 200px;
+  height: 100vh;
+  justify-content: center;
+  position: fixed;
+  padding-top: 1rem;
+  left: 0;
+  z-index: 10;
+}
+
+.sidebar-icon {
+  padding-right: 0.5rem;
+}
+
+.clicked {
+  background-color: white;
+  cursor: pointer;
+}
+
+.sidebar-menu:hover {
+  background-color: #e8eaed;
+  cursor: pointer;
+}
+
+.sidebar-submenu {
+  padding-left: 2rem;
+}
+
+.sidebar-submenu:hover {
+  background-color: #e8eaed;
+  cursor: pointer;
+}
