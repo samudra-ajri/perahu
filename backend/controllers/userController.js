@@ -18,6 +18,8 @@ const authUser = asyncHandler(async (req, res) => {
             email: user.email,
             birthdate: user.birthdate,
             klp: user.klp,
+            subjects: user.subjects,
+            poin: user.poin,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
         })
@@ -61,6 +63,8 @@ const registerUser = asyncHandler(async (req, res) => {
             email: user.email,
             birthdate: user.birthdate,
             klp: user.klp,
+            subjects: user.subjects,
+            poin: user.poin,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
         })
@@ -83,6 +87,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
             email: user.email,
             birthdate: user.birthdate,
             klp: user.klp,
+            subjects: user.subjects,
+            poin: user.poin,
             isAdmin: user.isAdmin,
             subjects: user.subjects
         })
@@ -128,6 +134,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             email: updatedUser.email,
             birthdate: updatedUser.birthdate,
             klp: updatedUser.klp,
+            subjects: updatedUser.subjects,
+            poin: updatedUser.poin,
             isAdmin: updatedUser.isAdmin,
             token: generateToken(updatedUser._id)
         })
@@ -209,6 +217,8 @@ const updateUser = asyncHandler(async (req, res) => {
             email: updatedUser.email,
             birthdate: updatedUser.birthdate,
             klp: updatedUser.klp,
+            subjects: updatedUser.subjects,
+            poin: updatedUser.poin,
             isAdmin: updatedUser.isAdmin,
             isActive: updatedUser.isActive
         })
@@ -238,6 +248,7 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
         while (i < user.subjects.length && !foundSubject) {
             if (user.subjects[i].name === completion.name) {
                 user.subjects[i].completed = completion.completed || []
+                user.subjects[i].poinCompleted = user.subjects[i].completed.length
                 foundSubject = true
             }
             
@@ -245,6 +256,8 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
         }
         
         if (!foundSubject) user.subjects.push(completion)
+
+        user.poin = user.subjects.reduce((acc, subject) => acc + subject.completed.length, 0)
 
         await user.save()
 

@@ -3,10 +3,8 @@ import bcrypt from 'bcryptjs'
 
 const subjectSchema = mongoose.Schema({
     name: { type: String, required: true },
-    completed: {
-        type: [String],
-        validate: v => Array.isArray(v) && v.length > 0
-    },
+    completed: { type: [String],required: true},
+    poinCompleted: {type: Number, required: true, default: 0}
 }, {
     timestamps: true
 })
@@ -34,6 +32,11 @@ const userSchema = mongoose.Schema({
         required: true
     },
     subjects: [subjectSchema],
+    poin: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     isAdmin: {
         type: Boolean,
         required: true,

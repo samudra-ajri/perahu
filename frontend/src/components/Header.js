@@ -23,35 +23,33 @@ const Header = () => {
     }
 
     return (
-        <header>
-                <Navbar bg='primary' variant='dark'>
-                    <Container fluid>
-                        {userInfo && (
-                            <LinkContainer to='#'>
-                                <Navbar.Brand onClick={showSidebarHandler}><i className='fas fa-bars'></i></Navbar.Brand>
+        <Navbar sticky='top' bg='primary' variant='dark'>
+            <Container fluid>
+                {userInfo && (
+                    <LinkContainer to='#'>
+                        <Navbar.Brand onClick={showSidebarHandler}><i className='fas fa-bars'></i></Navbar.Brand>
+                    </LinkContainer>
+                )}
+                <LinkContainer to='/'>
+                    <Navbar.Brand><strong>Perahu</strong></Navbar.Brand>
+                </LinkContainer>
+                
+                <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="ml-auto">
+                        {userInfo ? (
+                            <LinkContainer to='/logout' onClick={logoutHandler}>
+                                <Nav.Link>Sign Out <i className='fas fa-sign-out-alt'></i></Nav.Link>
+                            </LinkContainer>
+                        ) : (
+                            <LinkContainer to='/login'>
+                                <Nav.Link>Sign In <i className='fas fa-sign-in-alt'></i></Nav.Link>
                             </LinkContainer>
                         )}
-                        <LinkContainer to='/'>
-                            <Navbar.Brand>Perahu</Navbar.Brand>
-                        </LinkContainer>
-                        
-                        <Navbar.Toggle aria-controls='basic-navbar-nav' />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="ml-auto">
-                                {userInfo ? (
-                                    <LinkContainer to='/logout' onClick={logoutHandler}>
-                                        <Nav.Link>Sign Out <i className='fas fa-sign-out-alt'></i></Nav.Link>
-                                    </LinkContainer>
-                                ) : (
-                                    <LinkContainer to='/login'>
-                                        <Nav.Link>Sign In <i className='fas fa-sign-in-alt'></i></Nav.Link>
-                                    </LinkContainer>
-                                )}
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-        </header>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     )
 }
 

@@ -49,3 +49,11 @@ h2 {
   background-color: #e8eaed;
   cursor: pointer;
 }
+
+.unrounded-button {
+  border-radius: 0;
+}
+
+.progress-title:hover {
+  cursor: pointer;
+}
