@@ -239,7 +239,8 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
     if (user) {
         const completion = {
             name,
-            completed
+            completed,
+            poinCompleted: completed.length
         }
         
         let i = 0

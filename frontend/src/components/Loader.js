@@ -1,16 +1,16 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
 
-const Loader = () => {
+const Loader = ({ size, pos }) => {
     return (
         <Spinner
             animation='grow'
             variant='primary'
             role='status'
             style={{
-                width: '100px',
-                height: '100px',
-                margin: 'auto',
+                width: size === 'sm' ? '30px' : '100px',
+                height: size === 'sm' ? '30px' : '100px',
+                margin: pos === 'auto' && 'auto',
                 display: 'block',
             }}
         >

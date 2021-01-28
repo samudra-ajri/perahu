@@ -6,13 +6,17 @@ import {
 } from './reducers/sidebarReducers'
 import { 
     userLoginReducer,
-    userRegisterReducer
+    userRegisterReducer,
+    userDetailsReducer,
+    userSubjectAddReducer,
 } from './reducers/userReducers'
 
 const reducer = combineReducers({
     sidebarShow: sidebarShowReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
+    userDetails: userDetailsReducer,
+    userSubjectAdd: userSubjectAddReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

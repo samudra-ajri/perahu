@@ -1,10 +1,3 @@
-export const calculateTotalSubjectsPoin = (subjects) => {
-    if (subjects) {
-        const poin = subjects.reduce((acc, item) => acc + item.completed.length, 0)
-        return poin
-    }
-}
-
 export const calculateRank = (poin) => {
     if (poin > 2209) {
         return {rank: 'Ancient', img: 'https://s.id/xtDuS'}
