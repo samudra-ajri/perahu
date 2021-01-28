@@ -18,6 +18,7 @@ const SubjectsMainScreen = ({ history }) => {
 
     const [active, setActive] = useState('')
     const [userProgress, setUserProgress] = useState([])
+    const [userTotalProgress, setUserTotalProgress] = useState(0)
     const [subjectsProgress, setSubjectProgress] = useState([])
 
     const userSubjectAdd = useSelector((state) => state.userSubjectAdd)
@@ -53,6 +54,9 @@ const SubjectsMainScreen = ({ history }) => {
                 }
                 
                 countProgress()
+
+                const totalProgress = user.subjects.reduce((acc, subject) => acc + subject.completed.length, 0)
+                setUserTotalProgress(totalProgress)
             }
         }
     }, [dispatch, userInfo, user, successUserSubject, history])
@@ -122,64 +126,84 @@ const SubjectsMainScreen = ({ history }) => {
             { error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
-            subjectsDataMain.map((subject, i) => {
-                return(
-                    <div key={subject.name}>
-                        <Row 
-                            className='py-2 progress-title' 
-                            onClick={activeHandler(subject.name)}
-                        >
+                <>
+                <Row>
+                    <Col>
+                    <strong>TOTAL MATERI POKOK</strong>
+                        <Row>
                             <Col>
-                            {subject.name}
-                                <Row>
+                                {subjectsProgress.length !== 0 && 
+                                    <ProgressBar
+                                        variant={userTotalProgress/2208*100 >= 70 ? 'success' : userTotalProgress/2208*100 >= 30 ? 'warning' : 'secondary'} 
+                                        now={userTotalProgress/2208*100} 
+                                        label={`${(userTotalProgress/2208*100).toFixed(2)}%`}
+                                    />
+                                }
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <hr />
+                {subjectsDataMain.map((subject, i) => {
+                    return(
+                        <div key={subject.name}>
+                            
+                            <Row 
+                                className='py-2 progress-title' 
+                                onClick={activeHandler(subject.name)}
+                            >
+                                <Col>
+                                {subject.name}
+                                    <Row>
+                                        <Col>
+                                            {subjectsProgress.length !== 0 && 
+                                                <ProgressBar
+                                                    variant={subjectsProgress[i] >= 70 ? 'success' : subjectsProgress[i] >= 30 ? 'warning' : 'secondary'} 
+                                                    now={subjectsProgress[i]} 
+                                                    label={`${subjectsProgress[i]}%`}
+                                                />
+                                            }
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            {errorUserSubject && <Message variant='danger'>{errorUserSubject}</Message>}
+                            {active === subject.name && 
+                                <>
+                                <Row className='pb-2'>
                                     <Col>
-                                        {subjectsProgress.length !== 0 && 
-                                            <ProgressBar
-                                                variant={subjectsProgress[i] >= 70 ? 'success' : subjectsProgress[i] >= 30 ? 'warning' : 'secondary'} 
-                                                now={subjectsProgress[i]} 
-                                                label={`${subjectsProgress[i]}%`}
-                                            />
+                                        {loading 
+                                        ? <Loader size='sm' /> 
+                                        : <>
+                                            <Button variant='success' size='sm' onClick={finishButtonHandler(subject.target)} className='px-5'>Hatam</Button>
+                                            <Button variant='outline-secondary' size='sm' onClick={resetButtonHandler} className='mx-2'>Reset</Button>
+                                        </>
                                         }
                                     </Col>
                                 </Row>
-                            </Col>
-                        </Row>
-                        {errorUserSubject && <Message variant='danger'>{errorUserSubject}</Message>}
-                        {active === subject.name && 
-                            <>
-                            <Row className='pb-2'>
-                                <Col>
-                                    {loading 
-                                    ? <Loader size='sm' /> 
-                                    : <>
-                                        <Button variant='success' size='sm' onClick={finishButtonHandler(subject.target)} className='px-5'>Hatam</Button>
-                                        <Button variant='outline-secondary' size='sm' onClick={resetButtonHandler} className='mx-2'>Reset</Button>
-                                    </>
-                                    }
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    {Array.from(Array(subject.target).keys()).map(target => {
-                                        return (
-                                            <Button
-                                                id={target+1}
-                                                className='unrounded-button'
-                                                key={target} 
-                                                variant={userProgress.includes(String(target+1)) ? 'success' : 'outline-success'}
-                                                size='sm'
-                                                style={{width:'3rem'}}
-                                                onClick={clickHandler}
-                                            >{target+1}</Button>
-                                        )
-                                    })}
-                                </Col>
-                            </Row>
-                            </>
-                        }
-                    </div>
-                )
-            })
+                                <Row>
+                                    <Col>
+                                        {Array.from(Array(subject.target).keys()).map(target => {
+                                            return (
+                                                <Button
+                                                    id={target+1}
+                                                    className='unrounded-button'
+                                                    key={target} 
+                                                    variant={userProgress.includes(String(target+1)) ? 'success' : 'outline-success'}
+                                                    size='sm'
+                                                    style={{width:'3rem'}}
+                                                    onClick={clickHandler}
+                                                >{target+1}</Button>
+                                            )
+                                        })}
+                                    </Col>
+                                </Row>
+                                </>
+                            }
+                        </div>
+                    )
+                })}
+                </>
             )}
         </Container>
     )

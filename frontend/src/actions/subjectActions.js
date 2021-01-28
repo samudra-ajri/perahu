@@ -1,5 +1,5 @@
 export const calculateRank = (poin) => {
-    if (poin > 2209) {
+    if (poin > 2208) {
         return {rank: 'Ancient', img: 'https://s.id/xtDuS'}
     } else if (poin > 2000) {
         return {rank: 'Legend', img: 'https://s.id/xtDal'}
