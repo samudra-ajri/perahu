@@ -175,8 +175,8 @@ const SubjectsMainScreen = ({ history }) => {
                                         {loading 
                                         ? <Loader size='sm' /> 
                                         : <>
+                                            <Button variant='outline-secondary' size='sm' onClick={resetButtonHandler} className='mr-2'>Reset</Button>
                                             <Button variant='success' size='sm' onClick={finishButtonHandler(subject.target)} className='px-5'>Hatam</Button>
-                                            <Button variant='outline-secondary' size='sm' onClick={resetButtonHandler} className='mx-2'>Reset</Button>
                                         </>
                                         }
                                     </Col>

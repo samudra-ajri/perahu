@@ -269,6 +269,15 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc    Get top ranked user
+// @route   GET /api/users/top
+// @access  Public
+const getTopUsers = asyncHandler(async (req, res) => {
+    const products = await User.find({}).sort({ poin: -1 }).limit(5)
+  
+    res.json(products)
+})
+
 export { 
     authUser, 
     registerUser, 
@@ -278,5 +287,6 @@ export {
     deleteUser, 
     getUsersById, 
     updateUser, 
-    createCompletionSubjects 
+    createCompletionSubjects,
+    getTopUsers
 }

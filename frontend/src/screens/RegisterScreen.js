@@ -48,7 +48,7 @@ const RegisterScreen = ({ location, history }) => {
             <h1 style={{textAlign:'center'}}>Daftar</h1>
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
-            {loading && <Loader />}
+            {loading && <Loader pos='auto'/>}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
                     <Form.Label>Nama Lengkap</Form.Label>
