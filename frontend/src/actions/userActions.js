@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { 
+  USER_ADD_EXTRA_SUBJECT_FAIL,
+  USER_ADD_EXTRA_SUBJECT_REQUEST,
+  USER_ADD_EXTRA_SUBJECT_SUCCESS,
   USER_ADD_SUBJECT_FAIL,
   USER_ADD_SUBJECT_REQUEST,
   USER_ADD_SUBJECT_SUCCESS,
@@ -134,8 +137,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 }
 
-
-
 export const addUserSubject = (userId, subject) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -166,6 +167,41 @@ export const addUserSubject = (userId, subject) => async (dispatch, getState) =>
     }
     dispatch({
       type: USER_ADD_SUBJECT_FAIL,
+      payload: message,
+    })
+  }
+}
+
+export const addUserExtraSubject = (userId, subject) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_ADD_EXTRA_SUBJECT_REQUEST,
+    })
+
+    const { userLogin: { userInfo }} = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    await axios.post(`/api/users/${userId}/subjects-extra`, subject, config)
+
+    dispatch({
+      type: USER_ADD_EXTRA_SUBJECT_SUCCESS,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: USER_ADD_EXTRA_SUBJECT_FAIL,
       payload: message,
     })
   }

@@ -10,6 +10,7 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import SubjectsMainScreen from './screens/SubjectsMainScreen'
+import SubjectsExtraScreen from './screens/SubjectsExtraScreen'
 
 function App() {
   const sidebarShow = useSelector(state => state.sidebarShow)
@@ -26,6 +27,7 @@ function App() {
                 <Route path='/login' component={LoginScreen} />
                 <Route path='/register' component={RegisterScreen} />
                 <Route path='/completion/main' component={SubjectsMainScreen} />
+                <Route path='/completion/extra' component={SubjectsExtraScreen} />
                 <Route path='/' component={ProfileScreen} exact />
             </Col>
           </Row>

@@ -295,9 +295,9 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
 // @route   POST /api/users/:id/subjects-extra
 // @access  Private
 const createCompletionSubjectsExtra = asyncHandler(async (req, res) => {
-    const { type, subject } = req.body // type: extra or memory
+    const { type, subjects } = req.body // type: extra or memory
 
-    if (!subject) {
+    if (!subjects) {
         res.status(404)
         throw new Error("'subject' is equired")
     }
@@ -306,10 +306,10 @@ const createCompletionSubjectsExtra = asyncHandler(async (req, res) => {
         const user = await User.findById(req.params.id)
 
         if (user) {
-            if (type === 'extra' && user.subjectsExtra && !user.subjectsExtra.includes(subject)) {
-                user.subjectsExtra.push(subject)
-            } else if (type === 'memory' && user.subjectsMemory && !user.subjectsMemory.includes(subject)) {
-                user.subjectsMemory.push(subject)
+            if (type === 'extra' && user.subjectsExtra) {
+                user.subjectsExtra = subjects
+            } else if (type === 'memory' && user.subjectsMemory) {
+                user.subjectsMemory = subjects
             } else {
                 res.status(400)
                 throw new Error('Subject already reviewed')

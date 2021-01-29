@@ -1,4 +1,8 @@
 import { 
+    USER_ADD_EXTRA_SUBJECT_FAIL,
+    USER_ADD_EXTRA_SUBJECT_REQUEST,
+    USER_ADD_EXTRA_SUBJECT_RESET,
+    USER_ADD_EXTRA_SUBJECT_SUCCESS,
     USER_ADD_SUBJECT_FAIL,
     USER_ADD_SUBJECT_REQUEST,
     USER_ADD_SUBJECT_RESET,
@@ -71,6 +75,21 @@ export const userSubjectAddReducer = (state = {}, action) => {
         case USER_ADD_SUBJECT_FAIL:
             return { loading: false, error: action.payload }
         case USER_ADD_SUBJECT_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const userExtraSubjectAddReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_ADD_EXTRA_SUBJECT_REQUEST:
+            return { loading: true }
+        case USER_ADD_EXTRA_SUBJECT_SUCCESS:
+            return { loading: false, success: true }
+        case USER_ADD_EXTRA_SUBJECT_FAIL:
+            return { loading: false, error: action.payload }
+        case USER_ADD_EXTRA_SUBJECT_RESET:
             return {}
         default:
             return state

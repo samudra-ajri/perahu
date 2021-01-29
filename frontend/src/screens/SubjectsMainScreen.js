@@ -17,9 +17,9 @@ const SubjectsMainScreen = ({ history }) => {
     const { userInfo } = userLogin
 
     const [active, setActive] = useState('')
-    const [userProgress, setUserProgress] = useState([])
-    const [userTotalProgress, setUserTotalProgress] = useState(0)
-    const [subjectsProgress, setSubjectProgress] = useState([])
+    const [subjectProgress, setSubjectProgress] = useState([])
+    const [totalProgressCount, setTotalProgressCount] = useState(0)
+    const [totalProgress, setTotalProgress] = useState([])
 
     const userSubjectAdd = useSelector((state) => state.userSubjectAdd)
     const { success: successUserSubject, error: errorUserSubject } = userSubjectAdd
@@ -50,13 +50,13 @@ const SubjectsMainScreen = ({ history }) => {
                         : progress.push(0)
                     })
                     
-                    setSubjectProgress(progress)
+                    setTotalProgress(progress)
                 }
                 
                 countProgress()
 
                 const totalProgress = user.subjects.reduce((acc, subject) => acc + subject.completed.length, 0)
-                setUserTotalProgress(totalProgress)
+                setTotalProgressCount(totalProgress)
             }
         }
     }, [dispatch, userInfo, user, successUserSubject, history])
@@ -66,13 +66,13 @@ const SubjectsMainScreen = ({ history }) => {
             setActive('')
         } else {
             setActive(param)
-            setUserProgress([])
+            setSubjectProgress([])
 
             let found = false
             let i = 0
             while (i < user.subjects.length && found === false) {
                 if (user.subjects[i].name === param) {
-                    setUserProgress(user.subjects[i].completed)
+                    setSubjectProgress(user.subjects[i].completed)
                     found = true
                 }
                 i++
@@ -82,24 +82,24 @@ const SubjectsMainScreen = ({ history }) => {
     }
 
     const clickHandler = (e) => {
-        !userProgress.includes(e.target.id) 
-        ? setUserProgress([...userProgress, e.target.id])
-        : setUserProgress(userProgress.filter((target)=>(target !== e.target.id)))
+        !subjectProgress.includes(e.target.id) 
+        ? setSubjectProgress([...subjectProgress, e.target.id])
+        : setSubjectProgress(subjectProgress.filter((target)=>(target !== e.target.id)))
         
-        if (!userProgress.includes(e.target.id)) {
+        if (!subjectProgress.includes(e.target.id)) {
             dispatch(addUserSubject(user._id, {
                 name: active,
-                completed: [...userProgress, e.target.id]
+                completed: [...subjectProgress, e.target.id]
             }))
 
-            setUserProgress([...userProgress, e.target.id])
+            setSubjectProgress([...subjectProgress, e.target.id])
         } else {
             dispatch(addUserSubject(user._id, {
                 name: active,
-                completed: userProgress.filter((target)=>(target !== e.target.id))
+                completed: subjectProgress.filter((target)=>(target !== e.target.id))
             }))
 
-            setUserProgress(userProgress.filter((target)=>(target !== e.target.id)))
+            setSubjectProgress(subjectProgress.filter((target)=>(target !== e.target.id)))
         }
     }
 
@@ -108,7 +108,7 @@ const SubjectsMainScreen = ({ history }) => {
             name: active,
             completed: Array.from({length: target}, (_, i) => i + 1)
         }))
-        setUserProgress(Array.from({length: target}, (_, i) => String(i + 1)))
+        setSubjectProgress(Array.from({length: target}, (_, i) => String(i + 1)))
     }
 
     const resetButtonHandler = () => {
@@ -116,13 +116,15 @@ const SubjectsMainScreen = ({ history }) => {
             name: active,
             completed: []
         }))
-        setUserProgress([])
+        setSubjectProgress([])
     }
 
     return (
         <Container className='px-3'>
             <h1 style={{textAlign:'center'}}>MATERI POKOK</h1>
             <Card border="light" style={{ width: '13rem', margin:'auto' }} />
+            
+            {errorUserSubject && <Message variant='danger'>{errorUserSubject}</Message>}
             { error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
@@ -132,11 +134,11 @@ const SubjectsMainScreen = ({ history }) => {
                     <strong>TOTAL MATERI POKOK</strong>
                         <Row>
                             <Col>
-                                {subjectsProgress.length !== 0 && 
+                                {totalProgress.length !== 0 && 
                                     <ProgressBar
-                                        variant={userTotalProgress/2208*100 >= 70 ? 'success' : userTotalProgress/2208*100 >= 30 ? 'warning' : 'secondary'} 
-                                        now={userTotalProgress/2208*100} 
-                                        label={`${(userTotalProgress/2208*100).toFixed(2)}%`}
+                                        variant={totalProgressCount/2208*100 >= 70 ? 'success' : totalProgressCount/2208*100 >= 30 ? 'warning' : 'secondary'} 
+                                        now={totalProgressCount/2208*100} 
+                                        label={`${(totalProgressCount/2208*100).toFixed(2)}%`}
                                     />
                                 }
                             </Col>
@@ -156,29 +158,26 @@ const SubjectsMainScreen = ({ history }) => {
                                 {subject.name}
                                     <Row>
                                         <Col>
-                                            {subjectsProgress.length !== 0 && 
+                                            {totalProgress.length !== 0 && 
                                                 <ProgressBar
-                                                    variant={subjectsProgress[i] >= 70 ? 'success' : subjectsProgress[i] >= 30 ? 'warning' : 'secondary'} 
-                                                    now={subjectsProgress[i]} 
-                                                    label={`${subjectsProgress[i]}%`}
+                                                    variant={totalProgress[i] >= 70 ? 'success' : totalProgress[i] >= 30 ? 'warning' : 'secondary'} 
+                                                    now={totalProgress[i]} 
+                                                    label={`${totalProgress[i]}%`}
                                                 />
                                             }
                                         </Col>
                                     </Row>
                                 </Col>
                             </Row>
-                            {errorUserSubject && <Message variant='danger'>{errorUserSubject}</Message>}
                             {active === subject.name && 
                                 <>
                                 <Row className='pb-2'>
                                     <Col>
-                                        {loading 
-                                        ? <Loader size='sm' /> 
-                                        : <>
+                                       <Row className='ml-auto'>
                                             <Button variant='outline-secondary' size='sm' onClick={resetButtonHandler} className='mr-2'>Reset</Button>
-                                            <Button variant='success' size='sm' onClick={finishButtonHandler(subject.target)} className='px-5'>Hatam</Button>
-                                        </>
-                                        }
+                                            <Button variant='success' size='sm' onClick={finishButtonHandler(subject.target)} className='px-5 mr-2'>Hatam</Button>
+                                            {loading && <Loader size='sm' />}
+                                        </Row>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -189,7 +188,7 @@ const SubjectsMainScreen = ({ history }) => {
                                                     id={target+1}
                                                     className='unrounded-button'
                                                     key={target} 
-                                                    variant={userProgress.includes(String(target+1)) ? 'success' : 'outline-success'}
+                                                    variant={subjectProgress.includes(String(target+1)) ? 'success' : 'outline-success'}
                                                     size='sm'
                                                     style={{width:'3rem'}}
                                                     onClick={clickHandler}

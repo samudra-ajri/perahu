@@ -32,8 +32,14 @@ const userSchema = mongoose.Schema({
         required: true
     },
     subjects: [subjectSchema],
-    subjectsExtra: [String],
-    subjectsMemory: [String],
+    subjectsExtra: {
+        type: [String],
+        required: true
+    },
+    subjectsMemory: {
+        type: [String],
+        required: true
+    },
     poin: {
         type: Number,
         required: true,

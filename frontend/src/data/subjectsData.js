@@ -89,26 +89,69 @@ export const subjectsDataMain = [
 export const subjectsDataExtra = [
     {
         name: 'Tata Krama',
-        target: 1,
         category: 'extra'
     },
     {
-        name: 'Mukhtaru Dawat',
-        target: 1,
+        name: 'K. Mukhtaru Dawat',
         category: 'extra'
     },
-    
+    {
+        name: 'K. Adabu Tholib',
+        category: 'extra'
+    },
+    {
+        name: 'K. Faroid',
+        category: 'extra'
+    },
+    {
+        name: 'Kls. Pegon Bacaan',
+        category: 'extra'
+    },
+    {
+        name: 'Kls. Lambatan',
+        category: 'extra'
+    },
+    {
+        name: 'Kls. Cepatan',
+        category: 'extra'
+    },
+    {
+        name: 'K. Saringan',
+        category: 'extra'
+    },
+    {
+        name: 'Luzumul Jmh',
+        category: 'extra'
+    },
+    {
+        name: 'Mabadi/Nahwu',
+        category: 'extra'
+    },
+    {
+        name: 'Hidayatul Mustafid',
+        category: 'extra'
+    },
+    {
+        name: 'Sryh. Samaul Husna',
+        category: 'extra'
+    },
+    {
+        name: 'Syrh. Doa Asad',
+        category: 'extra'
+    },
+    {
+        name: 'Metode Tilawati',
+        category: 'extra'
+    }
 ]
 
 export const subjectsDataMemory = [
     {
         name: 'Asmaulhusna',
-        target: 1,
         category: 'memory'
     },
     {
         name: 'Doa Pagi-Sore',
-        target: 1,
         category: 'memory'
     },
     
