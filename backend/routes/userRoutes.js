@@ -10,6 +10,7 @@ import {
     getUsersById,
     updateUser,
     createCompletionSubjects,
+    createCompletionSubjectsExtra,
     getTopUsers
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
@@ -32,5 +33,8 @@ router
 router
     .route('/:id/subjects')
     .post(protect, createCompletionSubjects)
+router
+    .route('/:id/subjects-extra')
+    .post(protect, createCompletionSubjectsExtra)
 
 export default router

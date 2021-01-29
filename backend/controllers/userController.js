@@ -19,6 +19,8 @@ const authUser = asyncHandler(async (req, res) => {
             birthdate: user.birthdate,
             klp: user.klp,
             subjects: user.subjects,
+            subjectsExtra: user.subjectsExtra,
+            subjectsMemory: user.subjectsMemory,
             poin: user.poin,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
@@ -64,6 +66,8 @@ const registerUser = asyncHandler(async (req, res) => {
             birthdate: user.birthdate,
             klp: user.klp,
             subjects: user.subjects,
+            subjectsExtra: user.subjectsExtra,
+            subjectsMemory: user.subjectsMemory,
             poin: user.poin,
             isAdmin: user.isAdmin,
             token: generateToken(user._id)
@@ -88,6 +92,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
             birthdate: user.birthdate,
             klp: user.klp,
             subjects: user.subjects,
+            subjectsExtra: user.subjectsExtra,
+            subjectsMemory: user.subjectsMemory,
             poin: user.poin,
             isAdmin: user.isAdmin,
             subjects: user.subjects
@@ -135,6 +141,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             birthdate: updatedUser.birthdate,
             klp: updatedUser.klp,
             subjects: updatedUser.subjects,
+            subjectsExtra: user.subjectsExtra,
+            subjectsMemory: user.subjectsMemory,
             poin: updatedUser.poin,
             isAdmin: updatedUser.isAdmin,
             token: generateToken(updatedUser._id)
@@ -218,6 +226,8 @@ const updateUser = asyncHandler(async (req, res) => {
             birthdate: updatedUser.birthdate,
             klp: updatedUser.klp,
             subjects: updatedUser.subjects,
+            subjectsExtra: user.subjectsExtra,
+            subjectsMemory: user.subjectsMemory,
             poin: updatedUser.poin,
             isAdmin: updatedUser.isAdmin,
             isActive: updatedUser.isActive
@@ -226,6 +236,15 @@ const updateUser = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('User not found')
     }
+})
+
+// @desc    Get top ranked user
+// @route   GET /api/users/top
+// @access  Public
+const getTopUsers = asyncHandler(async (req, res) => {
+    const products = await User.find({}).sort({ poin: -1 }).limit(5)
+  
+    res.json(products)
 })
 
 // @desc    Create new completion subjects
@@ -258,7 +277,10 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
         
         if (!foundSubject) user.subjects.push(completion)
 
-        user.poin = user.subjects.reduce((acc, subject) => acc + subject.completed.length, 0)
+        user.poin = 
+                user.subjectsExtra.length + 
+                user.subjectsMemory.length + 
+                user.subjects.reduce((acc, subject) => acc + subject.poinCompleted, 0)
 
         await user.save()
 
@@ -269,13 +291,46 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Get top ranked user
-// @route   GET /api/users/top
-// @access  Public
-const getTopUsers = asyncHandler(async (req, res) => {
-    const products = await User.find({}).sort({ poin: -1 }).limit(5)
-  
-    res.json(products)
+// @desc    Create new completion extra subjects
+// @route   POST /api/users/:id/subjects-extra
+// @access  Private
+const createCompletionSubjectsExtra = asyncHandler(async (req, res) => {
+    const { type, subject } = req.body // type: extra or memory
+
+    if (!subject) {
+        res.status(404)
+        throw new Error("'subject' is equired")
+    }
+
+    if (type === 'extra' || type === 'memory') {
+        const user = await User.findById(req.params.id)
+
+        if (user) {
+            if (type === 'extra' && user.subjectsExtra && !user.subjectsExtra.includes(subject)) {
+                user.subjectsExtra.push(subject)
+            } else if (type === 'memory' && user.subjectsMemory && !user.subjectsMemory.includes(subject)) {
+                user.subjectsMemory.push(subject)
+            } else {
+                res.status(400)
+                throw new Error('Subject already reviewed')
+            }
+            
+            user.poin = 
+                user.subjectsExtra.length + 
+                user.subjectsMemory.length + 
+                user.subjects.reduce((acc, subject) => acc + subject.poinCompleted, 0)
+
+            await user.save()
+
+            res.status(201).json({ message: 'Subjects updated' })
+        } else {
+            res.status(404)
+            throw new Error('User not found')
+        }
+    } else {
+        res.status(404)
+        throw new Error("'type' is required both 'extra' or 'memory'")
+    }
 })
 
 export { 
@@ -288,5 +343,6 @@ export {
     getUsersById, 
     updateUser, 
     createCompletionSubjects,
+    createCompletionSubjectsExtra,
     getTopUsers
 }

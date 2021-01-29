@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 
 const subjectSchema = mongoose.Schema({
     name: { type: String, required: true },
-    completed: { type: [String],required: true},
+    completed: { type: [String], required: true},
     poinCompleted: {type: Number, required: true, default: 0}
 }, {
     timestamps: true
@@ -32,6 +32,8 @@ const userSchema = mongoose.Schema({
         required: true
     },
     subjects: [subjectSchema],
+    subjectsExtra: [String],
+    subjectsMemory: [String],
     poin: {
         type: Number,
         required: true,
