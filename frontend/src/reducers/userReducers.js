@@ -13,7 +13,10 @@ import {
     USER_LOGOUT, 
     USER_REGISTER_FAIL, 
     USER_REGISTER_REQUEST,
-    USER_REGISTER_SUCCESS
+    USER_REGISTER_SUCCESS,
+    USER_TOP_FAIL,
+    USER_TOP_REQUEST,
+    USER_TOP_SUCCESS
 } from "../constans/userConstans"
 
 export const userLoginReducer = (state = {}, action) => {
@@ -61,15 +64,28 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
 
 export const userSubjectAddReducer = (state = {}, action) => {
     switch (action.type) {
-      case USER_ADD_SUBJECT_REQUEST:
-        return { loading: true }
-      case USER_ADD_SUBJECT_SUCCESS:
-        return { loading: false, success: true }
-      case USER_ADD_SUBJECT_FAIL:
-        return { loading: false, error: action.payload }
-      case USER_ADD_SUBJECT_RESET:
-        return {}
-      default:
-        return state
+        case USER_ADD_SUBJECT_REQUEST:
+            return { loading: true }
+        case USER_ADD_SUBJECT_SUCCESS:
+            return { loading: false, success: true }
+        case USER_ADD_SUBJECT_FAIL:
+            return { loading: false, error: action.payload }
+        case USER_ADD_SUBJECT_RESET:
+            return {}
+        default:
+            return state
     }
-  }
+}
+
+export const userTopRankedReducer = (state = { users: [] }, action) => {
+    switch (action.type) {
+        case USER_TOP_REQUEST:
+            return { loading: true, users: [] }
+        case USER_TOP_SUCCESS:
+            return { loading: false, users: action.payload }
+        case USER_TOP_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}

@@ -12,7 +12,10 @@ import {
   USER_LOGOUT, 
   USER_REGISTER_FAIL, 
   USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS
+  USER_REGISTER_SUCCESS,
+  USER_TOP_FAIL,
+  USER_TOP_REQUEST,
+  USER_TOP_SUCCESS
 } from '../constans/userConstans'
 
 export const login = (email, password) => async (dispatch) => {
@@ -164,6 +167,27 @@ export const addUserSubject = (userId, subject) => async (dispatch, getState) =>
     dispatch({
       type: USER_ADD_SUBJECT_FAIL,
       payload: message,
+    })
+  }
+}
+
+export const listUserRanked = () => async (dispatch) => {
+  try {
+    dispatch({ type: USER_TOP_REQUEST })
+
+    const { data } = await axios.get(`/api/users/top`)
+
+    dispatch({
+      type: USER_TOP_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_TOP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     })
   }
 }
