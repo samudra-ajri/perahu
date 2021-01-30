@@ -36,7 +36,15 @@ const userSchema = mongoose.Schema({
         type: [String],
         required: true
     },
-    subjectsMemory: {
+    subjectsSurat: {
+        type: [String],
+        required: true
+    },
+    subjectsDoa: {
+        type: [String],
+        required: true
+    },
+    subjectsDalil: {
         type: [String],
         required: true
     },

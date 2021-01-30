@@ -30,9 +30,9 @@ const SubjectsExtraScreen = ({ history }) => {
                 dispatch({ type: USER_ADD_EXTRA_SUBJECT_RESET })
                 dispatch(getUserDetails('profile'))
             } else {
-                setTotalProgress(user.subjectsExtra)
                 setTotalProgressCount(user.subjectsExtra.length)
             }
+            setTotalProgress(user.subjectsExtra)
         }
     }, [dispatch, userInfo, user, successExtraSubject, history])
 
@@ -81,6 +81,7 @@ const SubjectsExtraScreen = ({ history }) => {
             <h1 style={{textAlign:'center'}}>MATERI PENUNJANG </h1>
             <Card border="light" style={{ width: '13rem', margin:'auto' }} />
 
+            {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
             { error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
@@ -102,7 +103,6 @@ const SubjectsExtraScreen = ({ history }) => {
                 </Row>
 
                 <hr />
-                {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
                 <Row className='pb-3'>
                     <Col>
                          <Row className='ml-auto'>

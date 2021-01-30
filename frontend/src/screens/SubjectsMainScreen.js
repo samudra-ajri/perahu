@@ -145,7 +145,6 @@ const SubjectsMainScreen = ({ history }) => {
                 {subjectsDataMain.map((subject, i) => {
                     return(
                         <div key={subject.name}>
-                            
                             <Row 
                                 className='py-2 progress-title' 
                                 onClick={activeHandler(subject.name)}

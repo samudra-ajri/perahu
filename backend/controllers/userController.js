@@ -278,9 +278,11 @@ const createCompletionSubjects = asyncHandler(async (req, res) => {
         if (!foundSubject) user.subjects.push(completion)
 
         user.poin = 
-                user.subjectsExtra.length + 
-                user.subjectsMemory.length + 
-                user.subjects.reduce((acc, subject) => acc + subject.poinCompleted, 0)
+            user.subjectsExtra.length + 
+            user.subjectsSurat.length +
+            user.subjectsDoa.length +
+            user.subjectsDalil.length + 
+            user.subjects.reduce((acc, subject) => acc + subject.poinCompleted, 0)
 
         await user.save()
 
@@ -302,14 +304,18 @@ const createCompletionSubjectsExtra = asyncHandler(async (req, res) => {
         throw new Error("'subject' is equired")
     }
 
-    if (type === 'extra' || type === 'memory') {
+    if (type === 'extra' || type === 'surat' || type === 'doa' || type === 'dalil') {
         const user = await User.findById(req.params.id)
 
         if (user) {
             if (type === 'extra' && user.subjectsExtra) {
                 user.subjectsExtra = subjects
-            } else if (type === 'memory' && user.subjectsMemory) {
-                user.subjectsMemory = subjects
+            } else if (type === 'surat' && user.subjectsSurat) {
+                user.subjectsSurat = subjects
+            } else if (type === 'doa' && user.subjectsDoa) {
+                user.subjectsDoa = subjects
+            } else if (type === 'dalil' && user.subjectsDalil) {
+                user.subjectsDalil = subjects
             } else {
                 res.status(400)
                 throw new Error('Subject already reviewed')
@@ -317,7 +323,9 @@ const createCompletionSubjectsExtra = asyncHandler(async (req, res) => {
             
             user.poin = 
                 user.subjectsExtra.length + 
-                user.subjectsMemory.length + 
+                user.subjectsSurat.length +
+                user.subjectsDoa.length +
+                user.subjectsDalil.length + 
                 user.subjects.reduce((acc, subject) => acc + subject.poinCompleted, 0)
 
             await user.save()
@@ -329,7 +337,7 @@ const createCompletionSubjectsExtra = asyncHandler(async (req, res) => {
         }
     } else {
         res.status(404)
-        throw new Error("'type' is required both 'extra' or 'memory'")
+        throw new Error("'type' is supposed to be extra, surat, doa or dalil")
     }
 })
 
