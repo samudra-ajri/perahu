@@ -18,11 +18,16 @@ const authUser = asyncHandler(async (req, res) => {
             email: user.email,
             birthdate: user.birthdate,
             klp: user.klp,
+            sex: user.sex,
             subjects: user.subjects,
             subjectsExtra: user.subjectsExtra,
-            subjectsMemory: user.subjectsMemory,
+            subjectsSurat: user.subjectsSurat,
+            subjectsDoa: user.subjectsDoa,
+            subjectsDalil: user.subjectsDalil,
             poin: user.poin,
+            isMuballigh: user.isAdmin,
             isAdmin: user.isAdmin,
+            isActive: user.isAdmin,
             token: generateToken(user._id)
         })
     } else {
@@ -35,7 +40,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  public
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password, klp, yearBirth, monthBirth, dayBirth, isAdmin } = req.body
+    const { name, email, password, klp, sex, isMuballigh, yearBirth, monthBirth, dayBirth, isAdmin } = req.body
 
     const userExists = await User.findOne({ email })
     
@@ -55,6 +60,8 @@ const registerUser = asyncHandler(async (req, res) => {
         password,
         birthdate: new Date(Date.UTC(Number(yearBirth), Number(monthBirth)-1, Number(dayBirth))),
         klp,
+        sex,
+        isMuballigh,
         isAdmin
     })
 
@@ -65,11 +72,16 @@ const registerUser = asyncHandler(async (req, res) => {
             email: user.email,
             birthdate: user.birthdate,
             klp: user.klp,
+            sex: user.sex,
             subjects: user.subjects,
             subjectsExtra: user.subjectsExtra,
-            subjectsMemory: user.subjectsMemory,
+            subjectsSurat: user.subjectsSurat,
+            subjectsDoa: user.subjectsDoa,
+            subjectsDalil: user.subjectsDalil,
             poin: user.poin,
+            isMuballigh: user.isAdmin,
             isAdmin: user.isAdmin,
+            isActive: user.isAdmin,
             token: generateToken(user._id)
         })
     } else {
@@ -91,12 +103,16 @@ const getUserProfile = asyncHandler(async (req, res) => {
             email: user.email,
             birthdate: user.birthdate,
             klp: user.klp,
+            sex: user.sex,
             subjects: user.subjects,
             subjectsExtra: user.subjectsExtra,
-            subjectsMemory: user.subjectsMemory,
+            subjectsSurat: user.subjectsSurat,
+            subjectsDoa: user.subjectsDoa,
+            subjectsDalil: user.subjectsDalil,
             poin: user.poin,
+            isMuballigh: user.isAdmin,
             isAdmin: user.isAdmin,
-            subjects: user.subjects
+            isActive: user.isAdmin
         })
     } else {
         res.status(404)
@@ -114,6 +130,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
         user.klp = req.body.klp || user.klp
+        user.sex = req.body.sex || user.sex
 
         const yearBirth = req.body.yearBirth || new Date(user.birthdate).getFullYear()
         const monthBirth = req.body.monthBirth-1 || new Date(user.birthdate).getMonth()
@@ -140,11 +157,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             email: updatedUser.email,
             birthdate: updatedUser.birthdate,
             klp: updatedUser.klp,
+            sex: updatedUser.sex,
             subjects: updatedUser.subjects,
-            subjectsExtra: user.subjectsExtra,
-            subjectsMemory: user.subjectsMemory,
+            subjectsExtra: updatedUser.subjectsExtra,
+            subjectsSurat: updatedUser.subjectsSurat,
+            subjectsDoa: updatedUser.subjectsDoa,
+            subjectsDalil: updatedUser.subjectsDalil,
             poin: updatedUser.poin,
+            isMuballigh: updatedUser.isAdmin,
             isAdmin: updatedUser.isAdmin,
+            isActive: updatedUser.isAdmin,
             token: generateToken(updatedUser._id)
         })
     } else {
@@ -200,6 +222,8 @@ const updateUser = asyncHandler(async (req, res) => {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
         user.klp = req.body.klp || user.klp
+        user.sex = req.body.sex || user.sex
+        user.isMuballigh = req.body.isMuballigh
         user.isAdmin = req.body.isAdmin
         user.isActive = req.body.isActive
 
@@ -225,12 +249,16 @@ const updateUser = asyncHandler(async (req, res) => {
             email: updatedUser.email,
             birthdate: updatedUser.birthdate,
             klp: updatedUser.klp,
+            sex: updatedUser.sex,
             subjects: updatedUser.subjects,
-            subjectsExtra: user.subjectsExtra,
-            subjectsMemory: user.subjectsMemory,
+            subjectsExtra: updatedUser.subjectsExtra,
+            subjectsSurat: updatedUser.subjectsSurat,
+            subjectsDoa: updatedUser.subjectsDoa,
+            subjectsDalil: updatedUser.subjectsDalil,
             poin: updatedUser.poin,
+            isMuballigh: updatedUser.isAdmin,
             isAdmin: updatedUser.isAdmin,
-            isActive: updatedUser.isActive
+            isActive: updatedUser.isAdmin
         })
     } else {
         res.status(404)

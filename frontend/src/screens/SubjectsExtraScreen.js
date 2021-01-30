@@ -103,7 +103,7 @@ const SubjectsExtraScreen = ({ history }) => {
                 </Row>
 
                 <hr />
-                <Row className='pb-3'>
+                <Row className='pb-2'>
                     <Col>
                          <Row className='ml-auto'>
                             <Button 

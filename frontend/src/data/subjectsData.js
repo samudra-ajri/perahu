@@ -145,7 +145,7 @@ export const subjectsDataExtra = [
     }
 ]
 
-export const subjectsDataMemory = [
+export const subjectsDataSurat = [
     {
         name: 'An-Naas',
         category: 'surat',
@@ -253,7 +253,10 @@ export const subjectsDataMemory = [
     {
         name: 'Al-Kahfi: 1-10',
         category: 'surat',
-    },
+    }
+]
+
+export const subjectsDataDoa = [
     {
         name: 'Akan tidur',
         category: 'doa',
@@ -365,7 +368,10 @@ export const subjectsDataMemory = [
     {
         name: 'ASAD',
         category: 'doa',
-    },
+    }
+]
+
+export const subjectsDataDalil = [
     {
         name: '5B: Mengaji',
         category: 'dalil',

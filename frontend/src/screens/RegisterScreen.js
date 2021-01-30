@@ -11,6 +11,8 @@ const RegisterScreen = ({ location, history }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [klp, setKlp] = useState('')
+    const [sex, setSex] = useState('')
+    const [isMuballigh, setIsMuballigh] = useState(false)
     const [dayBirth, setDayBirth] = useState('')
     const [monthBirth, setMonthBirth] = useState('')
     const [yearBirth, setYearBirth] = useState('')
@@ -39,7 +41,7 @@ const RegisterScreen = ({ location, history }) => {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(name, email, klp, dayBirth, monthBirth, yearBirth, password))
+            dispatch(register(name, email, klp, sex, isMuballigh, dayBirth, monthBirth, yearBirth, password))
         }
     }
 
@@ -49,6 +51,7 @@ const RegisterScreen = ({ location, history }) => {
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader pos='auto'/>}
+            
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
                     <Form.Label>Nama Lengkap</Form.Label>
@@ -72,21 +75,41 @@ const RegisterScreen = ({ location, history }) => {
                     ></Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId='klp'>
-                    <Form.Label>Klp</Form.Label>
-                    <Form.Control
-                        required
-                        as='select'
-                        value={klp}
-                        onChange={(e) => setKlp(e.target.value)}
-                        custom
-                    >
-                        <option value=''>Select...</option>
-                        <option value='mrb'>Marbar</option>
-                        <option value='mrs'>Marsel</option>
-                        <option value='mru'>Marut</option>
-                    </Form.Control>
-                </Form.Group>
+                <Row>
+                    <Col xs={7}>
+                        <Form.Group controlId='klp'>
+                            <Form.Label>Klp</Form.Label>
+                            <Form.Control
+                                required
+                                as='select'
+                                value={klp}
+                                onChange={(e) => setKlp(e.target.value)}
+                                custom
+                            >
+                                <option value=''disabled>Select...</option>
+                                <option value='mrb'>Marbar</option>
+                                <option value='mrs'>Marsel</option>
+                                <option value='mru'>Marut</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId='sex'>
+                            <Form.Label>L/P</Form.Label>
+                            <Form.Control
+                                required
+                                as='select'
+                                value={sex}
+                                onChange={(e) => setSex(e.target.value)}
+                                custom
+                            >
+                                <option value='' disabled>Select...</option>
+                                <option value='l'>Laki-laki</option>
+                                <option value='p'>Perempuan</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
+                </Row>
 
                 <Row>
                     <Col>
@@ -164,6 +187,15 @@ const RegisterScreen = ({ location, history }) => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     ></Form.Control>
+                </Form.Group>
+
+                <Form.Group controlId='isMuballigh'>
+                    <Form.Check
+                        type='checkbox'
+                        label='Sudah muballigh'
+                        value={isMuballigh}
+                        onChange={(e) => setIsMuballigh(!isMuballigh)}
+                    />
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>

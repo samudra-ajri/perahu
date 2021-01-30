@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    sex: {
+        type: String,
+        required: true
+    },
     subjects: [subjectSchema],
     subjectsExtra: {
         type: [String],
@@ -52,6 +56,11 @@ const userSchema = mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    isMuballigh: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     isAdmin: {
         type: Boolean,

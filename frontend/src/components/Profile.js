@@ -41,7 +41,7 @@ const Profile = ({ user }) => {
                         <strong>Kelas:</strong> {className}
                     </p>
                     <p>
-                        <strong>Materi:</strong> {(user.poin/2222*100).toFixed(2)}%
+                        <strong>Materi:</strong> {(user.poin/2296*100).toFixed(2)}%
                     </p>
                 </ListGroup.Item>
                 
