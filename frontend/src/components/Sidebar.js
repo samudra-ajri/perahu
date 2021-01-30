@@ -20,7 +20,8 @@ const Sidebar = () => {
                                 className={openBar === main.name ? 'clicked' : 'sidebar-menu'} 
                             >
                                 <Nav.Link>
-                                    <i className={`sidebar-icon ${main.icon}`}></i>{main.name}
+                                    <i className={`sidebar-icon ${main.icon}`}></i>
+                                    {main.name}
                                 </Nav.Link>
                             </Row>
 

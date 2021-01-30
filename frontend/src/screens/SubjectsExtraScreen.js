@@ -20,6 +20,7 @@ const SubjectsExtraScreen = ({ history }) => {
     const { success: successExtraSubject, error: errorExtraSubject } = userExtraSubjectAdd
 
     const [totalProgress, setTotalProgress] = useState([])
+    const [totalProgressCount, setTotalProgressCount] = useState([])
 
     useEffect(() => {
         if (!userInfo) {
@@ -30,6 +31,7 @@ const SubjectsExtraScreen = ({ history }) => {
                 dispatch(getUserDetails('profile'))
             } else {
                 setTotalProgress(user.subjectsExtra)
+                setTotalProgressCount(user.subjectsExtra.length)
             }
         }
     }, [dispatch, userInfo, user, successExtraSubject, history])
@@ -52,6 +54,16 @@ const SubjectsExtraScreen = ({ history }) => {
                 }
             ))
         }
+    }
+
+    const finishButtonHandler = () => {
+        dispatch(addUserExtraSubject(
+            user._id, 
+            {
+                type: 'extra',
+                subjects: subjectsDataExtra.map(a => a.name)
+            }
+        ))
     }
 
     const resetButtonHandler = () => {
@@ -80,9 +92,9 @@ const SubjectsExtraScreen = ({ history }) => {
                         <Row>
                             <Col>
                                 <ProgressBar
-                                    variant={totalProgress.length/14*100 >= 70 ? 'success' : totalProgress.length/14*100 >= 30 ? 'warning' : 'secondary'} 
-                                    now={totalProgress.length/14*100} 
-                                    label={`${(totalProgress.length/14*100).toFixed(2)}%`}
+                                    variant={totalProgressCount/14*100 >= 70 ? 'success' : totalProgressCount/14*100 >= 30 ? 'warning' : 'secondary'} 
+                                    now={totalProgressCount/14*100} 
+                                    label={`${(totalProgressCount/14*100).toFixed(2)}%`}
                                 />
                             </Col>
                         </Row>
@@ -91,6 +103,29 @@ const SubjectsExtraScreen = ({ history }) => {
 
                 <hr />
                 {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
+                <Row className='pb-3'>
+                    <Col>
+                         <Row className='ml-auto'>
+                            <Button 
+                                variant='outline-secondary' 
+                                size='sm' 
+                                className='mr-2'
+                                onClick={resetButtonHandler}
+                            >
+                                Reset
+                            </Button>
+                            <Button 
+                                variant='success' 
+                                size='sm' 
+                                className='mr-2'
+                                onClick={finishButtonHandler}
+                            >
+                                Hatam seluruh materi
+                            </Button>
+                            {loading && <Loader size='sm'/>}
+                        </Row>
+                    </Col>
+                </Row>
                 <Row>
                     <Col>
                         {subjectsDataExtra.map((subject) => {
@@ -107,21 +142,6 @@ const SubjectsExtraScreen = ({ history }) => {
                                 </Button>
                             )
                         })}
-                    </Col>
-                </Row>
-                <Row className='pt-2'>
-                    <Col>
-                         <Row className='ml-auto'>
-                            <Button 
-                                variant='outline-secondary' 
-                                size='sm' 
-                                className='mr-2'
-                                onClick={resetButtonHandler}
-                            >
-                                Reset
-                            </Button>
-                            {loading && <Loader size='sm'/>}
-                        </Row>
                     </Col>
                 </Row>
                 </>

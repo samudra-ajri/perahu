@@ -82,10 +82,6 @@ const SubjectsMainScreen = ({ history }) => {
     }
 
     const clickHandler = (e) => {
-        !subjectProgress.includes(e.target.id) 
-        ? setSubjectProgress([...subjectProgress, e.target.id])
-        : setSubjectProgress(subjectProgress.filter((target)=>(target !== e.target.id)))
-        
         if (!subjectProgress.includes(e.target.id)) {
             dispatch(addUserSubject(user._id, {
                 name: active,
@@ -155,7 +151,7 @@ const SubjectsMainScreen = ({ history }) => {
                                 onClick={activeHandler(subject.name)}
                             >
                                 <Col>
-                                {subject.name}
+                                {subject.name} <i className={active === subject.name ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i> 
                                     <Row>
                                         <Col>
                                             {totalProgress.length !== 0 && 
