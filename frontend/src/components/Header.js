@@ -26,9 +26,7 @@ const Header = () => {
         <Navbar sticky='top' bg='primary' variant='dark'>
             <Container fluid>
                 {userInfo && (
-                    <LinkContainer to='#'>
-                        <Navbar.Brand onClick={showSidebarHandler}><i className='fas fa-bars'></i></Navbar.Brand>
-                    </LinkContainer>
+                    <Navbar.Brand onClick={showSidebarHandler}><i className='fas fa-bars sidebar-button'></i></Navbar.Brand>
                 )}
                 <LinkContainer to='/'>
                     <Navbar.Brand><strong>Perahu</strong></Navbar.Brand>

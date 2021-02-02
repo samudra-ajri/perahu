@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Row, Col, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -127,7 +127,7 @@ const SubjectsMemoryScreen = ({ history }) => {
     return (
         <Container className='px-3'>
             <h1 style={{textAlign:'center'}}>MATERI HAFALAN</h1>
-            <Card border="light" style={{ width: '13rem', margin:'auto' }} />
+            <Card className='m-auto demon-card' style={{ width: '13rem' }} />
 
             {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
             { error ? (
@@ -142,7 +142,7 @@ const SubjectsMemoryScreen = ({ history }) => {
 
                 {['surat', 'doa', 'dalil'].map(category => {
                     return (
-                        <>
+                        <Fragment key={category}>
                         <Row className='py-2 progress-title' onClick={activeHandler(category)}>
                             <Col>
                                 <ProgressSubtitle 
@@ -173,7 +173,7 @@ const SubjectsMemoryScreen = ({ history }) => {
                             </Row>
                             </>
                         }
-                        </>
+                        </Fragment>
                     )
                 })}
                 </>

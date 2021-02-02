@@ -41,8 +41,7 @@ const ProfileScreen = ({ history }) => {
         : (
             <Container>
                 <h1 style={{textAlign:'center'}}>PROFIL</h1>
-
-                <Card border="light" style={{ width: '13rem', margin:'auto' }} />
+                <Card className='m-auto demon-card' style={{ width: '13rem' }} />
                 
                 <Row className="justify-content-md-center">
                     <Col md={4} lg={3}>

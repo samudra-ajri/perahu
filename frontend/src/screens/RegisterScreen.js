@@ -111,10 +111,11 @@ const RegisterScreen = ({ location, history }) => {
                     </Col>
                 </Row>
 
+                <Form.Label>Tanggal Lahir</Form.Label>
                 <Row>
                     <Col>
                         <Form.Group controlId='dayBirth'>
-                            <Form.Label>Tanggal Lahir</Form.Label>
+                            <Form.Label><small>Tanggal</small></Form.Label>
                             <Form.Control
                                 required
                                 type='text'
@@ -127,7 +128,7 @@ const RegisterScreen = ({ location, history }) => {
                     </Col>
                     <Col>
                         <Form.Group controlId='monthBirth'>
-                            <Form.Label>Bulan Lahir</Form.Label>
+                            <Form.Label><small>Bulan</small></Form.Label>
                             <Form.Control
                                 required
                                 as='select'
@@ -153,7 +154,7 @@ const RegisterScreen = ({ location, history }) => {
                     </Col>
                     <Col>
                         <Form.Group controlId='yearBirth'>
-                            <Form.Label>Tahun Lahir</Form.Label>
+                            <Form.Label><small>Tahun</small></Form.Label>
                             <Form.Control
                                 required
                                 type='text'

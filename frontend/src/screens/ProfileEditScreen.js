@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -67,6 +67,8 @@ const ProfileEditScreen = ({ history }) => {
     return (
         <FormContainer>
             <h1 style={{textAlign:'center'}}>Perbarui Profil</h1>
+            <Card className='m-auto demon-card' style={{ width: '13rem' }} />
+
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader pos='auto'/>}
@@ -130,10 +132,11 @@ const ProfileEditScreen = ({ history }) => {
                     </Col>
                 </Row>
 
+                <Form.Label className='mb-auto'>Tanggal Lahir</Form.Label>
                 <Row>
                     <Col>
                         <Form.Group controlId='dayBirth'>
-                            <Form.Label>Tanggal Lahir</Form.Label>
+                            <Form.Label><small>Tanggal</small></Form.Label>
                             <Form.Control
                                 required
                                 type='text'
@@ -146,7 +149,7 @@ const ProfileEditScreen = ({ history }) => {
                     </Col>
                     <Col>
                         <Form.Group controlId='monthBirth'>
-                            <Form.Label>Bulan Lahir</Form.Label>
+                            <Form.Label><small>Bulan</small></Form.Label>
                             <Form.Control
                                 required
                                 as='select'
@@ -172,7 +175,7 @@ const ProfileEditScreen = ({ history }) => {
                     </Col>
                     <Col>
                         <Form.Group controlId='yearBirth'>
-                            <Form.Label>Tahun Lahir</Form.Label>
+                            <Form.Label><small>Tahun</small></Form.Label>
                             <Form.Control
                                 required
                                 type='text'

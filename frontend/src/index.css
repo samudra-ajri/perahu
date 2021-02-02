@@ -41,6 +41,10 @@ h2 {
   cursor: pointer;
 }
 
+.sidebar-button:hover {
+  cursor: pointer;
+}
+
 .sidebar-submenu {
   padding-left: 2rem;
 }
@@ -69,4 +73,8 @@ h2 {
 .profile-edit:hover {
   color: #8f8888;
   cursor: pointer;
+}
+
+.demon-card {
+  border-style: none;
 }

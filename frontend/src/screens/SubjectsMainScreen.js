@@ -121,7 +121,7 @@ const SubjectsMainScreen = ({ history }) => {
     return (
         <Container className='px-3'>
             <h1 style={{textAlign:'center'}}>MATERI POKOK</h1>
-            <Card border="light" style={{ width: '13rem', margin:'auto' }} />
+            <Card className='m-auto demon-card' style={{ width: '13rem' }} />
             
             {errorUserSubject && <Message variant='danger'>{errorUserSubject}</Message>}
             { error ? (
