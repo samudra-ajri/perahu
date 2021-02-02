@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Card, Container, ProgressBar, Button } from 'react-bootstrap'
+import { Row, Col, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
 import { subjectsDataExtra } from '../data/subjectsData'
 import { addUserExtraSubject, getUserDetails } from '../actions/userActions'
 import { USER_ADD_EXTRA_SUBJECT_RESET } from '../constans/userConstans'
+import ProgressTitle from '../components/ProgressTitle'
+import ProgressButtons from '../components/ProgressButtons'
+import SubjectExtraGrid from '../components/SubjectExtraGrid'
 
 const SubjectsExtraScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -30,7 +32,7 @@ const SubjectsExtraScreen = ({ history }) => {
                 dispatch({ type: USER_ADD_EXTRA_SUBJECT_RESET })
                 dispatch(getUserDetails('profile'))
             } else {
-                setTotalProgressCount(user.subjectsExtra.length)
+                setTotalProgressCount((user.subjectsExtra.length/14*100).toFixed(2))
             }
             setTotalProgress(user.subjectsExtra)
         }
@@ -87,61 +89,27 @@ const SubjectsExtraScreen = ({ history }) => {
             ) : (
                 <>
                 <Row>
-                
                     <Col>
-                        <strong>TOTAL MATERI PENUNJANG</strong> 
-                        <Row>
-                            <Col>
-                                <ProgressBar
-                                    variant={totalProgressCount/14*100 >= 70 ? 'success' : totalProgressCount/14*100 >= 30 ? 'warning' : 'secondary'} 
-                                    now={totalProgressCount/14*100} 
-                                    label={`${(totalProgressCount/14*100).toFixed(2)}%`}
-                                />
-                            </Col>
-                        </Row>
+                        <ProgressTitle title='TOTAL MATERI PENUNJANG' count={totalProgressCount}/>
                     </Col>
                 </Row>
 
-                <hr />
                 <Row className='pb-2'>
                     <Col>
-                         <Row className='ml-auto'>
-                            <Button 
-                                variant='outline-secondary' 
-                                size='sm' 
-                                className='mr-2'
-                                onClick={resetButtonHandler}
-                            >
-                                Reset
-                            </Button>
-                            <Button 
-                                variant='success' 
-                                size='sm' 
-                                className='mr-2'
-                                onClick={finishButtonHandler}
-                            >
-                                Hatam seluruh materi
-                            </Button>
-                            {loading && <Loader size='sm'/>}
-                        </Row>
+                        <ProgressButtons 
+                            finishAction={finishButtonHandler} 
+                            resetActoin={resetButtonHandler} 
+                            loading={loading}
+                        />
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        {subjectsDataExtra.map((subject) => {
-                            return(
-                                <Button
-                                    key={subject.name}
-                                    id={subject.name}
-                                    size='sm'
-                                    className='mr-1 mb-1'
-                                    variant={totalProgress.includes(subject.name) ? 'success' : 'outline-success'}
-                                    onClick={clickHandler}
-                                >
-                                    {subject.name} 
-                                </Button>
-                            )
-                        })}
+                        <SubjectExtraGrid 
+                            data={subjectsDataExtra} 
+                            progress={totalProgress} 
+                            action={clickHandler}
+                        />
                     </Col>
                 </Row>
                 </>

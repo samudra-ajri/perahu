@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Card, Container, ProgressBar, Button } from 'react-bootstrap'
+import { Row, Col, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { subjectsDataMain } from '../data/subjectsData'
 import { addUserSubject, getUserDetails } from '../actions/userActions'
 import { USER_ADD_SUBJECT_RESET } from '../constans/userConstans'
-import Loader from '../components/Loader'
+import ProgressTitle from '../components/ProgressTitle'
+import ProgressSubtitle from '../components/ProgressSubtitle'
+import ProgressButtons from '../components/ProgressButtons'
+import SubjectMainGrid from '../components/SubjectMainGrid'
 
 const SubjectsMainScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -56,7 +59,7 @@ const SubjectsMainScreen = ({ history }) => {
                 countProgress()
 
                 const totalProgress = user.subjects.reduce((acc, subject) => acc + subject.completed.length, 0)
-                setTotalProgressCount(totalProgress)
+                setTotalProgressCount((totalProgress/2208*100).toFixed(2))
             }
         }
     }, [dispatch, userInfo, user, successUserSubject, history])
@@ -127,21 +130,9 @@ const SubjectsMainScreen = ({ history }) => {
                 <>
                 <Row>
                     <Col>
-                    <strong>TOTAL MATERI POKOK</strong>
-                        <Row>
-                            <Col>
-                                {totalProgress.length !== 0 && 
-                                    <ProgressBar
-                                        variant={totalProgressCount/2208*100 >= 70 ? 'success' : totalProgressCount/2208*100 >= 30 ? 'warning' : 'secondary'} 
-                                        now={totalProgressCount/2208*100} 
-                                        label={`${(totalProgressCount/2208*100).toFixed(2)}%`}
-                                    />
-                                }
-                            </Col>
-                        </Row>
+                        <ProgressTitle title='TOTAL MATERI POKOK' count={totalProgressCount}/>
                     </Col>
                 </Row>
-                <hr />
                 {subjectsDataMain.map((subject, i) => {
                     return(
                         <div key={subject.name}>
@@ -150,46 +141,33 @@ const SubjectsMainScreen = ({ history }) => {
                                 onClick={activeHandler(subject.name)}
                             >
                                 <Col>
-                                {subject.name} <i className={active === subject.name ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i> 
-                                    <Row>
-                                        <Col>
-                                            {totalProgress.length !== 0 && 
-                                                <ProgressBar
-                                                    variant={totalProgress[i] >= 70 ? 'success' : totalProgress[i] >= 30 ? 'warning' : 'secondary'} 
-                                                    now={totalProgress[i]} 
-                                                    label={`${totalProgress[i]}%`}
-                                                />
-                                            }
-                                        </Col>
-                                    </Row>
+                                    {totalProgress.length !== 0 &&
+                                        <ProgressSubtitle 
+                                            title={subject.name} 
+                                            count={totalProgress[i]} 
+                                            active={active} 
+                                        />
+                                    }
                                 </Col>
                             </Row>
                             {active === subject.name && 
                                 <>
                                 <Row className='pb-2'>
                                     <Col>
-                                       <Row className='ml-auto'>
-                                            <Button variant='outline-secondary' size='sm' onClick={resetButtonHandler} className='mr-2'>Reset</Button>
-                                            <Button variant='success' size='sm' onClick={finishButtonHandler(subject.target)} className='px-5 mr-2'>Hatam</Button>
-                                            {loading && <Loader size='sm' />}
-                                        </Row>
+                                        <ProgressButtons 
+                                            finishAction={finishButtonHandler(subject.target)} 
+                                            resetActoin={resetButtonHandler} 
+                                            loading={loading}
+                                        />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        {Array.from(Array(subject.target).keys()).map(target => {
-                                            return (
-                                                <Button
-                                                    id={target+1}
-                                                    className='unrounded-button'
-                                                    key={target} 
-                                                    variant={subjectProgress.includes(String(target+1)) ? 'success' : 'outline-success'}
-                                                    size='sm'
-                                                    style={{width:'3rem'}}
-                                                    onClick={clickHandler}
-                                                >{target+1}</Button>
-                                            )
-                                        })}
+                                        <SubjectMainGrid 
+                                            data={Array.from(Array(subject.target).keys())} 
+                                            progress={subjectProgress} 
+                                            action={clickHandler}
+                                        />
                                     </Col>
                                 </Row>
                                 </>

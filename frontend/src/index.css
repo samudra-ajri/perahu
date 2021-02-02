@@ -57,3 +57,7 @@ h2 {
 .progress-title:hover {
   cursor: pointer;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}

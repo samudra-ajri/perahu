@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Card, Container, ProgressBar, Button } from 'react-bootstrap'
+import { Row, Col, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
 import { subjectsDataSurat } from '../data/subjectsData'
 import { subjectsDataDoa } from '../data/subjectsData'
 import { subjectsDataDalil } from '../data/subjectsData'
 import { addUserExtraSubject, getUserDetails } from '../actions/userActions'
 import { USER_ADD_EXTRA_SUBJECT_RESET } from '../constans/userConstans'
+import ProgressTitle from '../components/ProgressTitle'
+import ProgressSubtitle from '../components/ProgressSubtitle'
+import ProgressButtons from '../components/ProgressButtons'
+import SubjectExtraGrid from '../components/SubjectExtraGrid'
 
 const SubjectsMemoryScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -37,13 +40,15 @@ const SubjectsMemoryScreen = ({ history }) => {
                 dispatch(getUserDetails('profile'))
             } else {
                 setTotalProgressCount(
-                    user.subjectsSurat.length + 
-                    user.subjectsDoa.length +
-                    user.subjectsDalil.length
+                    ((
+                        user.subjectsSurat.length + 
+                        user.subjectsDoa.length +
+                        user.subjectsDalil.length
+                    )/74*100).toFixed(2)
                 )
-                setSuratCount(user.subjectsSurat.length)
-                setDoaCount(user.subjectsDoa.length)
-                setDalilCount(user.subjectsDalil.length)
+                setSuratCount((user.subjectsSurat.length/27*100).toFixed(2))
+                setDoaCount((user.subjectsDoa.length/28*100).toFixed(2))
+                setDalilCount((user.subjectsDalil.length/19*100).toFixed(2))
             }
         }
     }, [dispatch, userInfo, user, successExtraSubject, history])
@@ -131,157 +136,46 @@ const SubjectsMemoryScreen = ({ history }) => {
                 <>
                 <Row>
                     <Col>
-                        <strong>TOTAL MATERI HAFALAN</strong> 
-                        <Row>
-                            <Col>
-                                <ProgressBar
-                                    variant={totalProgressCount/74*100 >= 70 ? 'success' : totalProgressCount/74*100 >= 30 ? 'warning' : 'secondary'} 
-                                    now={totalProgressCount/74*100} 
-                                    label={`${(totalProgressCount/74*100).toFixed(2)}%`}
-                                />
-                            </Col>
-                        </Row>
+                        <ProgressTitle title='TOTAL MATERI HAFALAN' count={totalProgressCount}/>
                     </Col>
                 </Row>
 
-                <hr />
-                <Row className='py-2 progress-title' onClick={activeHandler('surat')}>
-                    <Col>
-                        Surat pilihan <i className={active === 'surat' ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
-                        <Row>
+                {['surat', 'doa', 'dalil'].map(category => {
+                    return (
+                        <>
+                        <Row className='py-2 progress-title' onClick={activeHandler(category)}>
                             <Col>
-                                <ProgressBar
-                                    variant={suratCount/27*100 >= 70 ? 'success' : suratCount/27*100 >= 30 ? 'warning' : 'secondary'} 
-                                    now={suratCount/27*100} 
-                                    label={`${(suratCount/27*100).toFixed(2)}%`}
-                                />
+                                <ProgressSubtitle 
+                                title={category} 
+                                count={category==='surat' ? suratCount : category==='doa' ? doaCount : category==='dalil' && dalilCount} 
+                                active={active} />
                             </Col>
                         </Row>
-                    </Col>
-                </Row>
-                {active === 'surat' &&
-                <>
-                    <Row className='pb-2'>
-                        <Col>
-                            <Row className='ml-auto'>
-                                <Button variant='outline-secondary' onClick={resetButtonHandler} size='sm' className='mr-2'>Reset</Button>
-                                <Button variant='success' size='sm' onClick={finishButtonHandler} className='mr-2'>Hafal seluruh materi</Button>
-                                {loading && <Loader size='sm' />}
+                        {active === category &&
+                            <>
+                            <Row className='pb-2'>
+                                <Col>
+                                    <ProgressButtons 
+                                        finishAction={finishButtonHandler} 
+                                        resetActoin={resetButtonHandler} 
+                                        loading={loading}
+                                    />
+                                </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {subjectsDataSurat.map(subject => {
-                                return(
-                                    <Button
-                                        key={subject.name}
-                                        id={subject.name}
-                                        size='sm'
-                                        className='mr-1 mb-1'
-                                        variant={totalProgress.includes(subject.name) ? 'success' : 'outline-success'}
-                                        onClick={clickHandler}
-                                    >
-                                        {subject.name} 
-                                    </Button>
-                                )
-                            })}
-                        </Col>
-                    </Row>
-                </>
-                }
-
-                <Row className='py-2 progress-title' onClick={activeHandler('doa')}>
-                    <Col>
-                        Doa <i className={active === 'doa' ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
-                        <Row>
-                            <Col>
-                                <ProgressBar
-                                    variant={doaCount/28*100 >= 70 ? 'success' : doaCount/28*100 >= 30 ? 'warning' : 'secondary'} 
-                                    now={doaCount/28*100} 
-                                    label={`${(doaCount/28*100).toFixed(2)}%`}
-                                />
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-                {active === 'doa' &&
-                <>
-                    <Row className='pb-2'>
-                        <Col>
-                            <Row className='ml-auto'>
-                                <Button variant='outline-secondary' onClick={resetButtonHandler} size='sm' className='mr-2'>Reset</Button>
-                                <Button variant='success' size='sm' onClick={finishButtonHandler} className='mr-2'>Hafal seluruh materi</Button>
-                                {loading && <Loader size='sm' />}
+                            <Row>
+                                <Col>
+                                    <SubjectExtraGrid 
+                                        data={category==='surat' ? subjectsDataSurat : category==='doa' ? subjectsDataDoa : category==='dalil' && subjectsDataDalil}
+                                        progress={totalProgress} 
+                                        action={clickHandler} 
+                                    />
+                                </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {subjectsDataDoa.map(subject => {
-                                return(
-                                    <Button
-                                        key={subject.name}
-                                        id={subject.name}
-                                        size='sm'
-                                        className='mr-1 mb-1'
-                                        variant={totalProgress.includes(subject.name) ? 'success' : 'outline-success'}
-                                        onClick={clickHandler}
-                                    >
-                                        {subject.name} 
-                                    </Button>
-                                )
-                            })}
-                        </Col>
-                    </Row>
-                </>
-                }
-                
-                <Row className='py-2 progress-title' onClick={activeHandler('dalil')}>
-                    <Col>
-                        Dalil <i className={active === 'dalil' ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
-                        <Row>
-                            <Col>
-                                <ProgressBar
-                                    variant={dalilCount/19*100 >= 70 ? 'success' : dalilCount/19*100 >= 30 ? 'warning' : 'secondary'} 
-                                    now={dalilCount/19*100} 
-                                    label={`${(dalilCount/19*100).toFixed(2)}%`}
-                                />
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-                {active === 'dalil' &&
-                <>
-                    <Row className='pb-2'>
-                        <Col>
-                            <Row className='ml-auto'>
-                                <Button variant='outline-secondary' onClick={resetButtonHandler} size='sm' className='mr-2'>Reset</Button>
-                                <Button variant='success' size='sm' onClick={finishButtonHandler} className='mr-2'>Hafal seluruh materi</Button>
-                                {loading && <Loader size='sm' />}
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {subjectsDataDalil.map(subject => {
-                                return(
-                                    <Button
-                                        key={subject.name}
-                                        id={subject.name}
-                                        size='sm'
-                                        className='mr-1 mb-1'
-                                        variant={totalProgress.includes(subject.name) ? 'success' : 'outline-success'}
-                                        onClick={clickHandler}
-                                    >
-                                        {subject.name} 
-                                    </Button>
-                                )
-                            })}
-                        </Col>
-                    </Row>
-                </>
-                }
+                            </>
+                        }
+                        </>
+                    )
+                })}
                 </>
             )}
         </Container>
