@@ -20,7 +20,11 @@ import {
     USER_REGISTER_SUCCESS,
     USER_TOP_FAIL,
     USER_TOP_REQUEST,
-    USER_TOP_SUCCESS
+    USER_TOP_SUCCESS,
+    USER_UPDATE_PROFILE_FAIL,
+    USER_UPDATE_PROFILE_REQUEST,
+    USER_UPDATE_PROFILE_RESET,
+    USER_UPDATE_PROFILE_SUCCESS
 } from "../constans/userConstans"
 
 export const userLoginReducer = (state = {}, action) => {
@@ -104,6 +108,21 @@ export const userTopRankedReducer = (state = { users: [] }, action) => {
             return { loading: false, users: action.payload }
         case USER_TOP_FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const userUpdateProfileReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_UPDATE_PROFILE_REQUEST:
+            return { loading: true }
+        case USER_UPDATE_PROFILE_SUCCESS:
+            return { loading: false, success: true, userInfo: action.payload }
+        case USER_UPDATE_PROFILE_FAIL:
+            return { loading: false, error: action.payload }
+        case USER_UPDATE_PROFILE_RESET:
+            return {}
         default:
             return state
     }

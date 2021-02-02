@@ -45,7 +45,7 @@ export const subjectsDataMain = [
         category: 'main'
     },
     {
-        name: 'K. Kanjul Umal',
+        name: 'K. Kanjil Umal',
         target: 121,
         category: 'main'
     },

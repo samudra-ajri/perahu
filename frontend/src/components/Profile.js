@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/id';
 import { ListGroup } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 
 const Profile = ({ user }) => {
     const [className, setClassName] = useState('')
 
-    useEffect(()=> {
+    useEffect(() => {
         const calculateClass = () => {
-            const year = moment().diff(moment(user.birthdate), 'year')
-            if (year > 15) {
-                setClassName('Remaja')
-            } else if (year > 12) {
-                setClassName('Remaja')
+            if (user.isMuballigh) {
+                setClassName('Muballigh')
             } else {
-                setClassName('Cabe Rawit')
+                const year = moment().diff(moment(user.birthdate), 'year')
+                
+                if (year > 15) {
+                    setClassName('Remaja')
+                } else if (year > 12) {
+                    setClassName('Pra Remaja')
+                } else {
+                    setClassName('Cabe Rawit')
+                }
             }
         }
         
@@ -25,7 +31,7 @@ const Profile = ({ user }) => {
         <div>
             <ListGroup variant='flush' >
                 <ListGroup.Item>
-                    <h2 style={{textAlign:'center'}}>{user.name}</h2>
+                    <h2 style={{textAlign:'center'}}>{user.name} <LinkContainer to='/profile/edit'><small><i className='far fa-edit profile-edit'></i></small></LinkContainer></h2>
                 </ListGroup.Item>
                 <ListGroup.Item>
                     <p>
@@ -33,6 +39,9 @@ const Profile = ({ user }) => {
                     </p>
                     <p>
                         <strong>Lahir:</strong> {moment(user.birthdate).locale('id').format('ll')}
+                    </p>
+                    <p>
+                        <strong>L/P:</strong> {user.sex === 'l' ? 'laki-laki' : 'perempuan'}
                     </p>
                     <p>
                         <strong>Klp:</strong> {user.klp && user.klp.toUpperCase()}

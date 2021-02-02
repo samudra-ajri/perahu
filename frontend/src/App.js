@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import ProfileEditScreen from './screens/ProfileEditScreen'
 import SubjectsMainScreen from './screens/SubjectsMainScreen'
 import SubjectsExtraScreen from './screens/SubjectsExtraScreen'
 import SubjectsMemoryScreen from './screens/SubjectsMemoryScreen'
@@ -30,6 +31,7 @@ function App() {
                 <Route path='/completion/main' component={SubjectsMainScreen} />
                 <Route path='/completion/extra' component={SubjectsExtraScreen} />
                 <Route path='/completion/memory' component={SubjectsMemoryScreen} />
+                <Route path='/profile/edit' component={ProfileEditScreen} />
                 <Route path='/' component={ProfileScreen} exact />
             </Col>
           </Row>

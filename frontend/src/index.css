@@ -61,3 +61,12 @@ h2 {
 .capitalize {
   text-transform: capitalize;
 }
+
+.profile-edit {
+  color: lightgrey;
+}
+
+.profile-edit:hover {
+  color: #8f8888;
+  cursor: pointer;
+}

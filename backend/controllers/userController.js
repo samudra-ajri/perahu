@@ -25,9 +25,9 @@ const authUser = asyncHandler(async (req, res) => {
             subjectsDoa: user.subjectsDoa,
             subjectsDalil: user.subjectsDalil,
             poin: user.poin,
-            isMuballigh: user.isAdmin,
+            isMuballigh: user.isMuballigh,
             isAdmin: user.isAdmin,
-            isActive: user.isAdmin,
+            isActive: user.isActive,
             token: generateToken(user._id)
         })
     } else {
@@ -79,9 +79,9 @@ const registerUser = asyncHandler(async (req, res) => {
             subjectsDoa: user.subjectsDoa,
             subjectsDalil: user.subjectsDalil,
             poin: user.poin,
-            isMuballigh: user.isAdmin,
+            isMuballigh: user.isMuballigh,
             isAdmin: user.isAdmin,
-            isActive: user.isAdmin,
+            isActive: user.isActive,
             token: generateToken(user._id)
         })
     } else {
@@ -110,9 +110,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
             subjectsDoa: user.subjectsDoa,
             subjectsDalil: user.subjectsDalil,
             poin: user.poin,
-            isMuballigh: user.isAdmin,
+            isMuballigh: user.isMuballigh,
             isAdmin: user.isAdmin,
-            isActive: user.isAdmin
+            isActive: user.isActive
         })
     } else {
         res.status(404)
@@ -131,6 +131,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         user.email = req.body.email || user.email
         user.klp = req.body.klp || user.klp
         user.sex = req.body.sex || user.sex
+        user.isMuballigh = req.body.isMuballigh
 
         const yearBirth = req.body.yearBirth || new Date(user.birthdate).getFullYear()
         const monthBirth = req.body.monthBirth-1 || new Date(user.birthdate).getMonth()
@@ -164,9 +165,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             subjectsDoa: updatedUser.subjectsDoa,
             subjectsDalil: updatedUser.subjectsDalil,
             poin: updatedUser.poin,
-            isMuballigh: updatedUser.isAdmin,
+            isMuballigh: updatedUser.isMuballigh,
             isAdmin: updatedUser.isAdmin,
-            isActive: updatedUser.isAdmin,
+            isActive: updatedUser.isActive,
             token: generateToken(updatedUser._id)
         })
     } else {
@@ -256,9 +257,9 @@ const updateUser = asyncHandler(async (req, res) => {
             subjectsDoa: updatedUser.subjectsDoa,
             subjectsDalil: updatedUser.subjectsDalil,
             poin: updatedUser.poin,
-            isMuballigh: updatedUser.isAdmin,
+            isMuballigh: updatedUser.isMuballigh,
             isAdmin: updatedUser.isAdmin,
-            isActive: updatedUser.isAdmin
+            isActive: updatedUser.isActive
         })
     } else {
         res.status(404)
