@@ -1,28 +1,45 @@
 export const sidebarData = [
     {
-        name: 'Profil',
+        name: 'Profile',
         path: '/',
         icon: 'far fa-user-circle'
     },
     {
-        name: 'Pencapaian',
+        name: 'Subjects',
         path: '#',
         icon: 'far fa-paper-plane',
         sub: [
             {
-                name: 'Pokok',
+                name: 'Main',
                 path: '/completion/main',
                 icon: 'fas fa-quran'
             },
             {
-                name: 'Penunjang',
+                name: 'Support',
                 path: '/completion/extra',
                 icon: 'fas fa-book'
             },
             {
-                name: 'Hafalan',
+                name: 'Memory',
                 path: '/completion/memory',
                 icon: 'fas fa-inbox'
+            }
+        ]
+    },
+    {
+        name: 'Admin',
+        path: '#',
+        icon: 'fas fa-user-cog',
+        sub: [
+            {
+                name: 'Subjects',
+                path: '/#/admin/subjects',
+                icon: 'fas fa-chart-pie'
+            },
+            {
+                name: 'Users',
+                path: '/#/admin/users',
+                icon: 'fas fa-users'
             }
         ]
     },

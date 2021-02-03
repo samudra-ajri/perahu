@@ -120,7 +120,7 @@ const SubjectsMainScreen = ({ history }) => {
 
     return (
         <Container className='px-3'>
-            <h1 style={{textAlign:'center'}}>MATERI POKOK</h1>
+            <h1 style={{textAlign:'center'}}>MAIN SUBJECTS</h1>
             <Card className='m-auto demon-card' style={{ width: '13rem' }} />
             
             {errorUserSubject && <Message variant='danger'>{errorUserSubject}</Message>}
@@ -130,7 +130,7 @@ const SubjectsMainScreen = ({ history }) => {
                 <>
                 <Row>
                     <Col>
-                        <ProgressTitle title='TOTAL MATERI POKOK' count={totalProgressCount}/>
+                        <ProgressTitle title='TOTAL PROGRESS' count={totalProgressCount}/>
                     </Col>
                 </Row>
                 {subjectsDataMain.map((subject, i) => {

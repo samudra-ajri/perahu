@@ -40,7 +40,7 @@ const ProfileScreen = ({ history }) => {
         ? <Message variant='danger'>error</Message> 
         : (
             <Container>
-                <h1 style={{textAlign:'center'}}>PROFIL</h1>
+                <h1 style={{textAlign:'center'}}>PROFILE</h1>
                 <Card className='m-auto demon-card' style={{ width: '13rem' }} />
                 
                 <Row className="justify-content-md-center">

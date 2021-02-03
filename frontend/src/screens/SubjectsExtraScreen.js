@@ -80,7 +80,7 @@ const SubjectsExtraScreen = ({ history }) => {
 
     return (
         <Container className='px-3'>
-            <h1 style={{textAlign:'center'}}>MATERI PENUNJANG </h1>
+            <h1 style={{textAlign:'center'}}>SUPPORT SUBJECTS</h1>
             <Card className='m-auto demon-card' style={{ width: '13rem' }} />
 
             {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
@@ -90,7 +90,7 @@ const SubjectsExtraScreen = ({ history }) => {
                 <>
                 <Row>
                     <Col>
-                        <ProgressTitle title='TOTAL MATERI PENUNJANG' count={totalProgressCount}/>
+                        <ProgressTitle title='TOTAL PROGRESS' count={totalProgressCount}/>
                     </Col>
                 </Row>
 

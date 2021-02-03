@@ -47,14 +47,14 @@ const RegisterScreen = ({ location, history }) => {
 
     return (
         <FormContainer>
-            <h1 style={{textAlign:'center'}}>Daftar</h1>
+            <h1 style={{textAlign:'center'}}>Sign Up</h1>
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader pos='auto'/>}
             
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
-                    <Form.Label>Nama Lengkap</Form.Label>
+                    <Form.Label>Full Name</Form.Label>
                     <Form.Control
                         required
                         type='name'
@@ -95,7 +95,7 @@ const RegisterScreen = ({ location, history }) => {
                     </Col>
                     <Col>
                         <Form.Group controlId='sex'>
-                            <Form.Label>L/P</Form.Label>
+                            <Form.Label>Sex</Form.Label>
                             <Form.Control
                                 required
                                 as='select'
@@ -104,22 +104,22 @@ const RegisterScreen = ({ location, history }) => {
                                 custom
                             >
                                 <option value='' disabled>Select...</option>
-                                <option value='l'>Laki-laki</option>
-                                <option value='p'>Perempuan</option>
+                                <option value='l'>Male</option>
+                                <option value='p'>Female</option>
                             </Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>
 
-                <Form.Label>Tanggal Lahir</Form.Label>
+                <Form.Label>Birthdate</Form.Label>
                 <Row>
                     <Col>
                         <Form.Group controlId='dayBirth'>
-                            <Form.Label><small>Tanggal</small></Form.Label>
+                            <Form.Label><small>Day</small></Form.Label>
                             <Form.Control
                                 required
                                 type='text'
-                                placeholder='Tanggal'
+                                placeholder='Day'
                                 value={dayBirth}
                                 maxLength={2}
                                 onChange={(e) => setDayBirth(e.target.value)}
@@ -128,7 +128,7 @@ const RegisterScreen = ({ location, history }) => {
                     </Col>
                     <Col>
                         <Form.Group controlId='monthBirth'>
-                            <Form.Label><small>Bulan</small></Form.Label>
+                            <Form.Label><small>Month</small></Form.Label>
                             <Form.Control
                                 required
                                 as='select'
@@ -136,29 +136,29 @@ const RegisterScreen = ({ location, history }) => {
                                 onChange={(e) => setMonthBirth(e.target.value)}
                                 custom
                             >
-                                <option value='' disabled>Bulan</option>
-                                <option value='1'>Januari</option>
-                                <option value='2'>Februari</option>
-                                <option value='3'>Maret</option>
+                                <option value='' disabled>Month</option>
+                                <option value='1'>January</option>
+                                <option value='2'>February</option>
+                                <option value='3'>March</option>
                                 <option value='4'>April</option>
-                                <option value='5'>Mei</option>
-                                <option value='6'>Juni</option>
-                                <option value='7'>Juli</option>
-                                <option value='8'>Agustus</option>
+                                <option value='5'>May</option>
+                                <option value='6'>June</option>
+                                <option value='7'>July</option>
+                                <option value='8'>August</option>
                                 <option value='9'>September</option>
-                                <option value='10'>Oktober</option>
+                                <option value='10'>October</option>
                                 <option value='11'>November</option>
-                                <option value='12'>Desember</option>
+                                <option value='12'>December</option>
                             </Form.Control>
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group controlId='yearBirth'>
-                            <Form.Label><small>Tahun</small></Form.Label>
+                            <Form.Label><small>Year</small></Form.Label>
                             <Form.Control
                                 required
                                 type='text'
-                                placeholder='Tahun'
+                                placeholder='Year'
                                 value={yearBirth}
                                 maxLength={4}
                                 onChange={(e) => setYearBirth(e.target.value)}
@@ -180,7 +180,7 @@ const RegisterScreen = ({ location, history }) => {
                 </Form.Group>
 
                 <Form.Group controlId='confirmPassword'>
-                    <Form.Label>Konfirmasi Password</Form.Label>
+                    <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
                         required
                         type='password'
@@ -193,20 +193,20 @@ const RegisterScreen = ({ location, history }) => {
                 <Form.Group controlId='isMuballigh'>
                     <Form.Check
                         type='checkbox'
-                        label='Sudah muballigh'
+                        label='Muballigh'
                         value={isMuballigh}
                         onChange={(e) => setIsMuballigh(!isMuballigh)}
                     />
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    Daftar
+                    Register
                 </Button>
             </Form>
 
             <Row className='py-3'>
                 <Col style={{textAlign:'center'}}>
-                    Punya Akun?{' '}
+                    Have an Account?{' '}
                     <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
                         Login
                     </Link>

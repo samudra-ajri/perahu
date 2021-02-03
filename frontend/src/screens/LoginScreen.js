@@ -62,9 +62,9 @@ const LoginScreen = ({ location, history }) => {
 
             <Row className='py-3'>
                 <Col style={{textAlign:'center'}}>
-                    Pengguna Baru?{' '}
+                    New User?{' '}
                     <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                        Daftar
+                        Register
                     </Link>
                 </Col>
             </Row>

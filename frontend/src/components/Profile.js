@@ -38,19 +38,19 @@ const Profile = ({ user }) => {
                         <strong>Email:</strong> {user.email}
                     </p>
                     <p>
-                        <strong>Lahir:</strong> {moment(user.birthdate).locale('id').format('ll')}
+                        <strong>Birthdate:</strong> {moment(user.birthdate).locale('id').format('ll')}
                     </p>
                     <p>
-                        <strong>L/P:</strong> {user.sex === 'l' ? 'laki-laki' : 'perempuan'}
+                        <strong>Sex:</strong> {user.sex === 'l' ? 'male' : 'female'}
                     </p>
                     <p>
                         <strong>Klp:</strong> {user.klp && user.klp.toUpperCase()}
                     </p>
                     <p>
-                        <strong>Kelas:</strong> {className}
+                        <strong>Class:</strong> {className}
                     </p>
                     <p>
-                        <strong>Materi:</strong> {(user.poin/2296*100).toFixed(2)}%
+                        <strong>Subjects:</strong> {(user.poin/2296*100).toFixed(2)}%
                     </p>
                 </ListGroup.Item>
                 
