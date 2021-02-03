@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import { listUsers, deleteUser } from '../actions/userActions'
 import moment from 'moment'
 import 'moment/locale/id'
+import { USER_DELETE_RESET } from '../constans/userConstans'
 
 const UserListScreen = ({ match, history }) => {
 const keyword = match.params.keyword
@@ -33,7 +34,8 @@ const [searchKlp, setSearchKlp] = useState(keyword)
 useEffect(() => {
 
     if (userInfo && userInfo.isAdmin) {
-        if(users.length === 0) {
+        if(!users || successDelete) {
+            dispatch({ type: USER_DELETE_RESET })
             dispatch(listUsers(keyword))
         } else {
             const year = (birthdate) => moment().diff(moment(birthdate), 'year')
@@ -176,7 +178,7 @@ return (
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, i) => (
+                        {users && users.map((user, i) => (
                         <tr key={user._id}>
                             <td>{i+1}</td>
                             <td>{user.name}</td>
