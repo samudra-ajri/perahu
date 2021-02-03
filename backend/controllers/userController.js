@@ -180,7 +180,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-    const users = await User.find({})
+    const keyword = req.query.keyword
+    ? {
+        klp: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+
+    const users = await User.find({ ...keyword }).sort({ name: 1 })
     res.json(users)
 })
 

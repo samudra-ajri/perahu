@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import 'moment/locale/id';
+import 'moment/locale/id'
 import { ListGroup } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'
 
 const Profile = ({ user }) => {
     const [className, setClassName] = useState('')
@@ -14,9 +14,9 @@ const Profile = ({ user }) => {
             } else {
                 const year = moment().diff(moment(user.birthdate), 'year')
                 
-                if (year > 15) {
+                if (year > 14) {
                     setClassName('Remaja')
-                } else if (year > 12) {
+                } else if (year > 11) {
                     setClassName('Pra Remaja')
                 } else {
                     setClassName('Cabe Rawit')

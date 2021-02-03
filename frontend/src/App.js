@@ -33,7 +33,8 @@ function App() {
                 <Route path='/completion/extra' component={SubjectsExtraScreen} />
                 <Route path='/completion/memory' component={SubjectsMemoryScreen} />
                 <Route path='/profile/edit' component={ProfileEditScreen} />
-                <Route path='/admin/userlist' component={UserListScreen} />
+                <Route path='/admin/userlist' component={UserListScreen} exact/>
+                <Route path='/admin/userlist/search/:keyword' component={UserListScreen} exact/>
                 <Route path='/' component={ProfileScreen} exact />
             </Col>
           </Row>
