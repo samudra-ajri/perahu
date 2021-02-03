@@ -38,7 +38,7 @@ export const sidebarData = [
             },
             {
                 name: 'Users',
-                path: '/#/admin/users',
+                path: '/admin/userlist',
                 icon: 'fas fa-users'
             }
         ]

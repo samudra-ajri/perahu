@@ -13,6 +13,7 @@ import ProfileEditScreen from './screens/ProfileEditScreen'
 import SubjectsMainScreen from './screens/SubjectsMainScreen'
 import SubjectsExtraScreen from './screens/SubjectsExtraScreen'
 import SubjectsMemoryScreen from './screens/SubjectsMemoryScreen'
+import UserListScreen from './screens/UserListScreen'
 
 function App() {
   const sidebarShow = useSelector(state => state.sidebarShow)
@@ -32,6 +33,7 @@ function App() {
                 <Route path='/completion/extra' component={SubjectsExtraScreen} />
                 <Route path='/completion/memory' component={SubjectsMemoryScreen} />
                 <Route path='/profile/edit' component={ProfileEditScreen} />
+                <Route path='/admin/userlist' component={UserListScreen} />
                 <Route path='/' component={ProfileScreen} exact />
             </Col>
           </Row>
