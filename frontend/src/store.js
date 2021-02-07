@@ -14,6 +14,7 @@ import {
     userTopRankedReducer,
     userListReducer,
     userDeleteReducer,
+    userUpdateReducer,
 } from './reducers/userReducers'
 
 const reducer = combineReducers({
@@ -27,6 +28,7 @@ const reducer = combineReducers({
     userTopRanked: userTopRankedReducer,
     userList: userListReducer,
     userDelete: userDeleteReducer,
+    userUpdate: userUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

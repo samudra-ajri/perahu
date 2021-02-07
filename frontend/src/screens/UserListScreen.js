@@ -10,86 +10,86 @@ import 'moment/locale/id'
 import { USER_DELETE_RESET } from '../constans/userConstans'
 
 const UserListScreen = ({ match, history }) => {
-const keyword = match.params.keyword
+    const keyword = match.params.keyword
 
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-const userList = useSelector((state) => state.userList)
-const { loading, error, users } = userList
+    const userList = useSelector((state) => state.userList)
+    const { loading, error, users } = userList
 
-const userLogin = useSelector((state) => state.userLogin)
-const { userInfo } = userLogin
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
 
-const userDelete = useSelector((state) => state.userDelete)
-const { success: successDelete } = userDelete
+    const userDelete = useSelector((state) => state.userDelete)
+    const { success: successDelete } = userDelete
 
-const [remajaCount, setRemajaCount] = useState(0)
-const [praremajaCount, setPraremajaCount] = useState(0)
-const [rawitCount, setRawitCount] = useState(0)
-const [maleCount, setMaleCount] = useState(0)
-const [femaleCount, setFemaleCount] = useState(0)
+    const [remajaCount, setRemajaCount] = useState(0)
+    const [praremajaCount, setPraremajaCount] = useState(0)
+    const [rawitCount, setRawitCount] = useState(0)
+    const [maleCount, setMaleCount] = useState(0)
+    const [femaleCount, setFemaleCount] = useState(0)
 
-const [searchKlp, setSearchKlp] = useState(keyword)
+    const [searchKlp, setSearchKlp] = useState(keyword)
 
-useEffect(() => {
+    useEffect(() => {
 
-    if (userInfo && userInfo.isAdmin) {
-        if(!users || successDelete) {
-            dispatch({ type: USER_DELETE_RESET })
-            dispatch(listUsers(keyword))
+        if (userInfo && userInfo.isAdmin) {
+            if(!users || successDelete) {
+                dispatch({ type: USER_DELETE_RESET })
+                dispatch(listUsers(keyword))
+            } else {
+                const year = (birthdate) => moment().diff(moment(birthdate), 'year')
+                setRemajaCount((users.filter((user)=>(year(user.birthdate) > 14))).length)
+                setPraremajaCount((users.filter((user)=>((year(user.birthdate) > 11) && (year(user.birthdate) <= 14))).length))
+                setRawitCount((users.filter((user)=>(year(user.birthdate) <= 11))).length)
+
+                setMaleCount((users.filter((user)=>(user.sex === 'l'))).length)
+                setFemaleCount((users.filter((user)=>(user.sex === 'p'))).length)
+            }
         } else {
-            const year = (birthdate) => moment().diff(moment(birthdate), 'year')
-            setRemajaCount((users.filter((user)=>(year(user.birthdate) > 14))).length)
-            setPraremajaCount((users.filter((user)=>((year(user.birthdate) > 11) && (year(user.birthdate) <= 14))).length))
-            setRawitCount((users.filter((user)=>(year(user.birthdate) <= 11))).length)
-
-            setMaleCount((users.filter((user)=>(user.sex === 'l'))).length)
-            setFemaleCount((users.filter((user)=>(user.sex === 'p'))).length)
+            history.push('/login')
         }
-    } else {
-        history.push('/login')
+    }, [dispatch, history, successDelete, userInfo, users, keyword])
+
+    const calculateClass = (user) => {
+        const year = moment().diff(moment(user.birthdate), 'year')
+        
+        if (year > 14) {
+            return 'R'
+        } else if (year > 11) {
+            return 'PR'
+        } else {
+            return 'CR'
+        }
     }
-}, [dispatch, history, successDelete, userInfo, users, keyword])
 
-const calculateClass = (user) => {
-    const year = moment().diff(moment(user.birthdate), 'year')
-    
-    if (year > 14) {
-        return 'R'
-    } else if (year > 11) {
-        return 'PR'
-    } else {
-        return 'CR'
+    const deleteHandler = (id) => {
+        if (window.confirm('Are you sure?')) {
+            dispatch(deleteUser(id))
+        }
     }
-}
 
-const deleteHandler = (id) => {
-    if (window.confirm('Are you sure?')) {
-        dispatch(deleteUser(id))
+    const searchKlpHandler = (e) => {
+        !e.target.value 
+            ? history.push(`/admin/userlist`) 
+            : history.push(`/admin/userlist/search/${e.target.value}`)
+        dispatch(listUsers(e.target.value))
+        setSearchKlp(e.target.value)
     }
-}
 
-const searchKlpHandler = (e) => {
-    !e.target.value 
-        ? history.push(`/admin/userlist`) 
-        : history.push(`/admin/userlist/search/${e.target.value}`)
-    dispatch(listUsers(e.target.value))
-    setSearchKlp(e.target.value)
-}
-
-return (
+    return (
         <>
             <h1 style={{textAlign:'center'}}>Users</h1>
             <Card className='m-auto demon-card' style={{ width: '13rem' }} />
 
             {loading ? (
-                <Loader />
+                <Loader pos='auto'/>
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
                 <Row>
-                    <Col xs={8} sm={4} md={2}>
+                    <Col xs={5} sm={4} md={3} xl={2}>
                         <Form>
                             <Form.Group controlId='klp'>
                                 <Form.Control
@@ -156,7 +156,6 @@ return (
                             <strong>{maleCount+femaleCount}</strong>
                         </Row>
                     </Col>
-
                 </Row>
 
                 <Table hover responsive size='sm'>
