@@ -33,8 +33,8 @@ const SubjectsExtraScreen = ({ history }) => {
                 dispatch(getUserDetails('profile'))
             } else {
                 setTotalProgressCount((user.subjectsExtra.length/14*100).toFixed(2))
+                setTotalProgress(user.subjectsExtra)
             }
-            setTotalProgress(user.subjectsExtra)
         }
     }, [dispatch, userInfo, user, successExtraSubject, history])
 

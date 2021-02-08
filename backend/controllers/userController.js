@@ -189,7 +189,7 @@ const getUsers = asyncHandler(async (req, res) => {
       }
     : {}
 
-    const users = await User.find({ ...keyword }).sort({ name: 1 })
+    const users = await User.find({ ...keyword }).sort({ isActive: -1, name: 1 })
     res.json(users)
 })
 

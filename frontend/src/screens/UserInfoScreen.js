@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Button, Card, Row, Col, Form, Container } from 'react-bootstrap'
+import { Card, Row, Col, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import ChartUserSubject from '../components/ChartUserSubject'
 import { getUserDetails, updateUser } from '../actions/userActions'
 import { Link } from 'react-router-dom'
-import FormContainer from '../components/FormContainer'
 import { USER_LIST_RESET, USER_UPDATE_RESET } from '../constans/userConstans'
 
 const UserInfoScreen = ({ match, history }) => {
@@ -38,11 +38,9 @@ const UserInfoScreen = ({ match, history }) => {
                 setIsAdmin(user.isAdmin)
             }
         }
-    }, [dispatch, history, user])
+    }, [dispatch, history, userInfo, userId, user, successUpdate])
 
-    const updateActive = (e) => {
-        e.preventDefault()
-
+    const updateActive = () => {
         const updatedUser = user
         updatedUser.isActive = !isActive
 
@@ -60,11 +58,9 @@ const UserInfoScreen = ({ match, history }) => {
 
     return (
         <>
-            <Container>
-                <Link to='/admin/userlist' className='btn btn-light mx-3 mt-3 mb-1'>
-                    <i className='fas fa-arrow-left'></i> Back
-                </Link>
-            </Container>
+            <Link to='/admin/userlist' className='btn btn-light mx-3 mt-3 mb-1'>
+                <i className='fas fa-arrow-left'></i> Back
+            </Link>
 
             <h1 style={{ textAlign:'center' }}>{user.name}</h1>
                         <Card className='m-auto demon-card' style={{ width: '13rem' }} />
@@ -76,17 +72,16 @@ const UserInfoScreen = ({ match, history }) => {
                     <Message variant='danger'>{errorUpdate}</Message>
                 ) : (
                     <>
-                        
                         <Form style={{ marginTop:'-20px' }}>
                             <Row className='justify-content-center'>
-                                <Col xs={2} md={2} lg={1}>
+                                <Col xs={3} md={2} lg={1}>
                                 <Form.Group controlId='isMuballigh'>
                                     <Form.Check
                                         type='checkbox'
                                         label='Active'
-                                        value={isActive}
                                         checked={isActive}
                                         onChange={updateActive}
+                                        custom
                                     />
                                     </Form.Group>
                                 </Col>
@@ -95,9 +90,9 @@ const UserInfoScreen = ({ match, history }) => {
                                     <Form.Check
                                         type='checkbox'
                                         label='Admin'
-                                        value={isAdmin}
                                         checked={isAdmin}
                                         onChange={updateAdmin}
+                                        custom
                                     />
                                     </Form.Group>
                                 </Col>
@@ -114,6 +109,17 @@ const UserInfoScreen = ({ match, history }) => {
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
+                    <Row className='justify-content-center py-3'>
+                        <Col xs={3}>
+                            <ChartUserSubject title='Main Subjects' data={[30,20]} />
+                        </Col>
+                        <Col xs={3}>
+                            <ChartUserSubject title='Extra Subjects' data={[90,25]} />
+                        </Col>
+                        <Col xs={3}>
+                            <ChartUserSubject title='Memory Subjects' data={[55,20]} />
+                        </Col>
+                    </Row>
                 </>
             )}
         </>

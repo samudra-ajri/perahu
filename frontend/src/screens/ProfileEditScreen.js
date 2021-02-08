@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col, Card, Container } from 'react-bootstrap'
+import { Form, Button, Row, Col, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -9,7 +9,6 @@ import moment from 'moment'
 import 'moment/locale/id';
 import { USER_UPDATE_PROFILE_RESET } from '../constans/userConstans'
 import { Link } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
 
 const ProfileEditScreen = ({ history }) => {
     const [name, setName] = useState('')
@@ -68,11 +67,9 @@ const ProfileEditScreen = ({ history }) => {
 
     return (
         <>
-        <Container>
-            <Link to='/' className='btn btn-light mx-3 mt-3 mb-1'>
-                <i className='fas fa-arrow-left'></i> Back
-            </Link>
-        </Container>
+        <Link to='/' className='btn btn-light mx-3 mt-3 mb-1'>
+            <i className='fas fa-arrow-left'></i> Back
+        </Link>
 
         <h1 style={{textAlign:'center'}}>Edit Profile</h1>
         <Card className='m-auto demon-card' style={{ width: '13rem' }} />
@@ -225,6 +222,7 @@ const ProfileEditScreen = ({ history }) => {
                         label='Muballigh'
                         value={isMuballigh}
                         onChange={(e) => setIsMuballigh(!isMuballigh)}
+                        custom
                     />
                 </Form.Group>
 

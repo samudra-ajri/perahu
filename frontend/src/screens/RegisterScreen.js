@@ -196,6 +196,7 @@ const RegisterScreen = ({ location, history }) => {
                         label='Muballigh'
                         value={isMuballigh}
                         onChange={(e) => setIsMuballigh(!isMuballigh)}
+                        custom
                     />
                 </Form.Group>
 
