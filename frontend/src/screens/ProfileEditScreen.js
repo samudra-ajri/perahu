@@ -72,7 +72,7 @@ const ProfileEditScreen = ({ history }) => {
         </Link>
 
         <h1 style={{textAlign:'center'}}>Edit Profile</h1>
-        <Card className='m-auto demon-card' style={{ width: '13rem' }} />
+        <Card className='m-auto demon-card' style={{ width: '14rem' }} />
 
         <FormContainer>
             {message && <Message variant='danger'>{message}</Message>}

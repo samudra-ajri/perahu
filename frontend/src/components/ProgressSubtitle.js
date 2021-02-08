@@ -5,7 +5,7 @@ import { Row, Col, ProgressBar } from 'react-bootstrap'
 const ProgressSubtitle = ({ title, count, active}) => {
     return (
         <>
-            <span className='capitalize'>{title}</span> <i className={active === title ? 'fas fa-caret-down' : 'fas fa-caret-right'}></i>
+            <span className='capitalize'>{title}</span> <i className={active === title ? 'fas fa-caret-right' : 'fas fa-caret-down'}></i>
             <Row>
                 <Col>
                     <ProgressBar

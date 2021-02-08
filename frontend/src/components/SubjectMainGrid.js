@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 
-const SubjectMainGrid = ({ data, progress, action }) => {
+const SubjectMainGrid = ({ data, progress, action, disabled }) => {
     return (
         data.map(target => {
             return (
@@ -13,10 +13,15 @@ const SubjectMainGrid = ({ data, progress, action }) => {
                     variant={progress.includes(String(target+1)) ? 'success' : 'outline-success'}
                     style={{width:'3rem'}}
                     onClick={action}
+                    disabled={disabled}
                 >{target+1}</Button>
             )
         })
     )
+}
+
+SubjectMainGrid.defaultProps = {
+    disabled: false,
 }
 
 export default SubjectMainGrid

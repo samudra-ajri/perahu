@@ -2,11 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Row, Col, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
-import { subjectsDataSurat } from '../data/subjectsData'
-import { subjectsDataDoa } from '../data/subjectsData'
-import { subjectsDataDalil } from '../data/subjectsData'
+import { subjectsDataSurat, subjectsDataDoa, subjectsDataDalil } from '../data/subjectsData'
 import { addUserExtraSubject, getUserDetails } from '../actions/userActions'
-import { USER_ADD_EXTRA_SUBJECT_RESET } from '../constans/userConstans'
+import { USER_ADD_EXTRA_SUBJECT_RESET, USER_LIST_RESET } from '../constans/userConstans'
 import ProgressTitle from '../components/ProgressTitle'
 import ProgressSubtitle from '../components/ProgressSubtitle'
 import ProgressButtons from '../components/ProgressButtons'
@@ -27,9 +25,9 @@ const SubjectsMemoryScreen = ({ history }) => {
     const [active, setActive] = useState([])
     const [totalProgress, setTotalProgress] = useState([])
     const [totalProgressCount, setTotalProgressCount] = useState([])
-    const [suratCount, setSuratCount] = useState([])
-    const [doaCount, setDoaCount] = useState([])
-    const [dalilCount, setDalilCount] = useState([])
+    const [suratCount, setSuratCount] = useState(0)
+    const [doaCount, setDoaCount] = useState(0)
+    const [dalilCount, setDalilCount] = useState(0)
 
     useEffect(() => {
         if (!userInfo) {
@@ -37,6 +35,7 @@ const SubjectsMemoryScreen = ({ history }) => {
         } else {
             if (!user || !user.name || successExtraSubject) {
                 dispatch({ type: USER_ADD_EXTRA_SUBJECT_RESET })
+                dispatch({ type: USER_LIST_RESET })
                 dispatch(getUserDetails('profile'))
             } else {
                 setTotalProgressCount(

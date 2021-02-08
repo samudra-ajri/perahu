@@ -78,3 +78,17 @@ h2 {
 .demon-card {
   border-style: none;
 }
+
+.chart-subject {
+  padding-top: 1rem;
+}
+
+.chart-subject-focused {
+  padding-top: 1rem;
+  background-color: #f8f9fa;
+}
+
+.chart-subject:hover {
+  background-color: #e8eaed;
+  cursor: pointer;
+}

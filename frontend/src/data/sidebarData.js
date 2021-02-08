@@ -15,7 +15,7 @@ export const sidebarData = [
                 icon: 'fas fa-quran'
             },
             {
-                name: 'Support',
+                name: 'Extra',
                 path: '/completion/extra',
                 icon: 'fas fa-book'
             },

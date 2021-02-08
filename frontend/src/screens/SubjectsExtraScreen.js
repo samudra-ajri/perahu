@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { subjectsDataExtra } from '../data/subjectsData'
 import { addUserExtraSubject, getUserDetails } from '../actions/userActions'
-import { USER_ADD_EXTRA_SUBJECT_RESET } from '../constans/userConstans'
+import { USER_ADD_EXTRA_SUBJECT_RESET, USER_LIST_RESET } from '../constans/userConstans'
 import ProgressTitle from '../components/ProgressTitle'
 import ProgressButtons from '../components/ProgressButtons'
 import SubjectExtraGrid from '../components/SubjectExtraGrid'
@@ -30,6 +30,7 @@ const SubjectsExtraScreen = ({ history }) => {
         } else {
             if (!user || !user.name || successExtraSubject) {
                 dispatch({ type: USER_ADD_EXTRA_SUBJECT_RESET })
+                dispatch({ type: USER_LIST_RESET })
                 dispatch(getUserDetails('profile'))
             } else {
                 setTotalProgressCount((user.subjectsExtra.length/14*100).toFixed(2))
@@ -80,7 +81,7 @@ const SubjectsExtraScreen = ({ history }) => {
 
     return (
         <Container className='px-3'>
-            <h1 style={{textAlign:'center'}}>SUPPORT SUBJECTS</h1>
+            <h1 style={{textAlign:'center'}}>EXTRA SUBJECTS</h1>
             <Card className='m-auto demon-card' style={{ width: '13rem' }} />
 
             {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}

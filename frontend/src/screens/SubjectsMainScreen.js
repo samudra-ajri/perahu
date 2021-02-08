@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { subjectsDataMain } from '../data/subjectsData'
 import { addUserSubject, getUserDetails } from '../actions/userActions'
-import { USER_ADD_SUBJECT_RESET } from '../constans/userConstans'
+import { USER_ADD_SUBJECT_RESET, USER_LIST_RESET } from '../constans/userConstans'
 import ProgressTitle from '../components/ProgressTitle'
 import ProgressSubtitle from '../components/ProgressSubtitle'
 import ProgressButtons from '../components/ProgressButtons'
@@ -33,6 +33,7 @@ const SubjectsMainScreen = ({ history }) => {
         } else {
             if (!user || !user.name || successUserSubject) {
                 dispatch({ type: USER_ADD_SUBJECT_RESET })
+                dispatch({ type: USER_LIST_RESET })
                 dispatch(getUserDetails('profile'))
             } else {
                 const countProgress = () => {
