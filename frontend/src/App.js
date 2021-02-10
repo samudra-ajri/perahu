@@ -15,6 +15,7 @@ import SubjectsExtraScreen from './screens/SubjectsExtraScreen'
 import SubjectsMemoryScreen from './screens/SubjectsMemoryScreen'
 import UserListScreen from './screens/UserListScreen'
 import UserInfoScreen from './screens/UserInfoScreen'
+import SubjectsInfoScreen from './screens/SubjectsInfoScreen'
 
 function App() {
   const sidebarShow = useSelector(state => state.sidebarShow)
@@ -37,6 +38,7 @@ function App() {
                 <Route path='/admin/userlist' component={UserListScreen} exact/>
                 <Route path='/admin/userlist/search/:keyword' component={UserListScreen} exact/>
                 <Route path='/admin/user/:id/info' component={UserInfoScreen} />
+                <Route path='/admin/subjects' component={SubjectsInfoScreen} />
                 <Route path='/' component={ProfileScreen} exact />
             </Col>
           </Row>

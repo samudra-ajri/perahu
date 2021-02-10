@@ -32,8 +32,8 @@ export const sidebarData = [
         icon: 'fas fa-user-cog',
         sub: [
             {
-                name: 'Subjects',
-                path: '/#/admin/subjects',
+                name: 'Subjects Map',
+                path: '/admin/subjects',
                 icon: 'fas fa-chart-pie'
             },
             {
