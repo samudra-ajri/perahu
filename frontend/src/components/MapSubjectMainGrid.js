@@ -22,12 +22,14 @@ const MapSubjectMainGrid = ({ data, progress, userCount }) => {
                         size='sm'
                         className='unrounded-button'
                         style={{
-                            color: progress[target+1]/userCount >= 0.6 ? 'white' : 'grey',
                             width: '3rem',
                             border: 'none',
-                            backgroundColor: `rgba(86,204,157,${progress[target+1]/userCount})`
+                            backgroundColor: progress[target+1]/userCount >= 0.4 
+                                ? `rgba(86,204,157,${progress[target+1]/userCount})`
+                                : `rgba(243,150,154,${1-(progress[target+1]/userCount)})`
                         }}
-                    >{target+1}
+                    >
+                        {target+1}
                     </Button>
                 </OverlayTrigger>
             )

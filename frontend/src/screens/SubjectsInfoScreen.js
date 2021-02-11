@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Container, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { listUsers } from '../actions/userActions'
-import Loader from '../components/Loader'
-import MapSubjectMainGrid from '../components/MapSubjectMainGrid'
-import Message from '../components/Message'
-import ProgressSubtitle from '../components/ProgressSubtitle'
-import { subjectsDataMain } from '../data/subjectsData'
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { Card, Col, Container, Form, Row } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux';
+import SubjectsMainInfo from './SubjectsMainInfo'
+import SubjectsExtraInfo from './SubjectsExtraInfo'
+import SubjectsMemoryInfo from './SubjectsMemoryInfo'
+import ChartUserSubject from '../components/ChartUserSubject';
+import { listUsers } from '../actions/userActions';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const SubjectsInfoScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -15,77 +17,54 @@ const SubjectsInfoScreen = ({ history }) => {
     const { userInfo } = userLogin
 
     const userList = useSelector((state) => state.userList)
-    const { loading, error, users } = userList
+    const { loading, error, users, klp } = userList
 
-    const [active, setActive] = useState('')
+    const [focus, setFocus] = useState('main')
 
-    const [mainSubjectsCount, setMainSubjectsCount] = useState({})
-    const [mainSubjectsProgress, setMainSubjectsProgress] = useState({})
+    const [mainTotalProgressCount, setMainTotalProgressCount] = useState(0)
+    const [extraTotalProgressCount, setExtraTotalProgressCount] = useState(0)
+    const [memoryTotalProgressCount, setMemoryTotalProgressCount] = useState(0)
+
+    const [searchKlp, setSearchKlp] = useState(klp)
 
     useEffect(() => {
-        if (!userInfo && !userInfo.isAdmin) {
-            history.push('/login')
-        } else {
-            const mainSubjectsCount = {}
-
-            subjectsDataMain.forEach(subject => {
-                mainSubjectsCount[subject.name] = 0
-            })
-
+        if (userInfo && userInfo.isAdmin) {
             if (!users) {
-                dispatch(listUsers())
+                dispatch(listUsers(searchKlp))
             } else {
+                let mainTotal = 0
+                let extraTotal = 0
+                let memoryTotal = 0
+
                 users.forEach(user => {
-                    subjectsDataMain.forEach(subject => {
-                        user.subjects.some(userSubject => {
-                            if (subject.name === userSubject.name) {
-                                mainSubjectsCount[subject.name] += userSubject.poinCompleted
-                            }
-                            return subject.name === userSubject.name
-                        })
+                    user.subjects.forEach( userSubject => {
+                        mainTotal += userSubject.poinCompleted
                     })
+
+                    extraTotal += user.subjectsExtra.length
+
+                    memoryTotal += (user.subjectsSurat.length + user.subjectsDoa.length + user.subjectsDalil.length)
                 })
+
+                setMainTotalProgressCount(mainTotal/(2208*users.length+0.00001)*100)
+                setExtraTotalProgressCount(extraTotal/(14*users.length+0.00001)*100)
+                setMemoryTotalProgressCount(memoryTotal/(74*users.length+0.00001)*100)
+
+                setSearchKlp(klp)
             }
-
-            setMainSubjectsCount(mainSubjectsCount)
-        }
-    }, [history, dispatch, users, userInfo])
-
-    const activeHandler = param => () => {
-        if (active === param) {
-            setActive('')
         } else {
-            setActive(param)
-            setMainSubjectsProgress({})
-
-            const pages = {}
-            subjectsDataMain.some(subject => {
-                if (subject.name === param) {
-                    for (let i = 0; i < subject.target; i++) {
-                        pages[i+1] = 0
-                    }
-                }
-                return subject.name === param
-            })
-
-            users.forEach(user => {
-                user.subjects.some(userSubject => {
-                    if (userSubject.name === param) {
-                        userSubject.completed.forEach(page => {
-                            pages[page] += 1  
-                        })
-                    }
-                    return userSubject.name === param
-                })
-            })
-
-            setMainSubjectsProgress(pages)
+            history.push('/login')
         }
+    }, [history, userInfo, dispatch, users, searchKlp, klp])
+
+    const searchKlpHandler = (e) => {
+        dispatch(listUsers(e.target.value))
+        setSearchKlp(e.target.value)
     }
 
     return (
-        <Container>
-            <h1 style={{textAlign:'center'}}>Subjects Map</h1>
+        <Router>
+            <h1 style={{textAlign:'center'}}>SUBJECTS MAP</h1>
             <Card className='m-auto demon-card' style={{ width: '13rem' }} />
 
             {loading ? (
@@ -94,38 +73,47 @@ const SubjectsInfoScreen = ({ history }) => {
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
-                    {subjectsDataMain.map(subject => {
-                        return (
-                            <div key={subject.name}>
-                                <Row 
-                                    className='py-2 progress-title' 
-                                    onClick={activeHandler(subject.name)}
-                                >
-                                    <Col>
-                                        <ProgressSubtitle 
-                                            title={subject.name} 
-                                            count={users && (mainSubjectsCount[subject.name]/(subject.target*users.length)*100).toFixed(2)} 
-                                            active={active} 
-                                        />
-                                    </Col>
-                                </Row>
-                                {active === subject.name && 
-                                    <Row>
-                                        <Col>
-                                            <MapSubjectMainGrid
-                                                data={Array.from(Array(subject.target).keys())}
-                                                progress={mainSubjectsProgress} 
-                                                userCount={users.length}
-                                            />
-                                        </Col>
-                                    </Row>
-                                }
-                            </div>
-                        )
-                    })}
+                <Container>
+                    <Row>
+                        <Col xs={5} sm={4} md={3} xl={2}>
+                            <Form>
+                                <Form.Group controlId='klp'>
+                                    <Form.Control
+                                        required
+                                        as='select'
+                                        value={searchKlp}
+                                        onChange={searchKlpHandler}
+                                        custom
+                                    >
+                                        <option value=''>All Klp</option>
+                                        <option value='mrb'>Marbar</option>
+                                        <option value='mrs'>Marsel</option>
+                                        <option value='mru'>Marut</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Form>
+                        </Col>
+                    </Row>
+                </Container>
+                <Row className='justify-content-center py-3'>
+                    <Col as={Link} to='/admin/subjects/main' xs={3} onClick={(e) => setFocus('main')} className={focus==='main' ? 'chart-subject-focused' : 'chart-subject'}>
+                        <ChartUserSubject title='Main Subjects' data={[mainTotalProgressCount.toFixed(2), (100.00-mainTotalProgressCount).toFixed(2)]} />
+                    </Col>
+                    <Col as={Link} to='/admin/subjects/extra' xs={3} onClick={(e) => setFocus('extra')} className={focus==='extra' ? 'chart-subject-focused' : 'chart-subject'}>
+                        <ChartUserSubject title='Extra Subjects' data={[extraTotalProgressCount.toFixed(2), (100.00-extraTotalProgressCount).toFixed(2)]} />
+                    </Col>
+                    <Col as={Link} to='/admin/subjects/memory' xs={3} onClick={(e) => setFocus('memory')} className={focus==='memory' ? 'chart-subject-focused' : 'chart-subject'}>
+                        <ChartUserSubject title='Memory Subjects' data={[memoryTotalProgressCount.toFixed(2), (100.00-memoryTotalProgressCount).toFixed(2)]} />
+                    </Col>
+                </Row>
                 </>
             )}
-        </Container>
+
+            <Route path='/admin/subjects/main' component={SubjectsMainInfo} exact/>
+            <Route path='/admin/subjects/extra' component={SubjectsExtraInfo} exact/>
+            <Route path='/admin/subjects/memory' component={SubjectsMemoryInfo} exact/>
+            <Route path='/admin/subjects/' component={SubjectsMainInfo} exact />
+        </Router>
     )
 }
 

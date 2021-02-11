@@ -15,7 +15,7 @@ const UserListScreen = ({ match, history }) => {
     const dispatch = useDispatch()
 
     const userList = useSelector((state) => state.userList)
-    const { loading, error, users } = userList
+    const { loading, error, users, klp } = userList
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
@@ -29,7 +29,7 @@ const UserListScreen = ({ match, history }) => {
     const [maleCount, setMaleCount] = useState(0)
     const [femaleCount, setFemaleCount] = useState(0)
 
-    const [searchKlp, setSearchKlp] = useState(keyword)
+    const [searchKlp, setSearchKlp] = useState(klp)
 
     useEffect(() => {
 
@@ -45,11 +45,13 @@ const UserListScreen = ({ match, history }) => {
 
                 setMaleCount((users.filter((user)=>(user.sex === 'l'))).length)
                 setFemaleCount((users.filter((user)=>(user.sex === 'p'))).length)
+
+                setSearchKlp(klp)
             }
         } else {
             history.push('/login')
         }
-    }, [dispatch, history, successDelete, userInfo, users, keyword])
+    }, [dispatch, history, successDelete, userInfo, users, keyword, klp])
 
     const calculateClass = (user) => {
         const year = moment().diff(moment(user.birthdate), 'year')

@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2'
 
 const ChartUserSubject = ({ title, data }) => {
     const chartData = {
-        labels: ['Completed', 'Uncompleted'],
+        labels: ['OK (%)', 'Nope (%)'],
         datasets: [
             {
                 label: 'Subjects',
@@ -12,7 +12,6 @@ const ChartUserSubject = ({ title, data }) => {
             }
         ]
     }
-
 
     return (
         <Doughnut

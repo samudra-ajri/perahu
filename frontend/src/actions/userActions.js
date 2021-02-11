@@ -309,6 +309,7 @@ export const listUsers = (keyword = '') => async (dispatch, getState) => {
     dispatch({
       type: USER_LIST_SUCCESS,
       payload: data,
+      klp: keyword
     })
   } catch (error) {
     const message =

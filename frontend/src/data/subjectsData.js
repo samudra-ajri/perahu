@@ -116,7 +116,7 @@ export const subjectsDataExtra = [
         category: 'extra'
     },
     {
-        name: 'K. Saringan',
+        name: 'Kls. Saringan',
         category: 'extra'
     },
     {
@@ -132,7 +132,7 @@ export const subjectsDataExtra = [
         category: 'extra'
     },
     {
-        name: 'Sryh. Samaul Husna',
+        name: 'Sryh. Asmaul Husna',
         category: 'extra'
     },
     {
