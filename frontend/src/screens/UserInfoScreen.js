@@ -97,19 +97,24 @@ const UserInfoScreen = ({ match, history }) => {
     }, [dispatch, history, userInfo, userId, user, successUpdate, focus])
 
     const updateActive = () => {
-        const updatedUser = user
-        updatedUser.isActive = !isActive
+        if (window.confirm('Are you sure?')) {
+            const updatedUser = user
+            updatedUser.isActive = !isActive
 
-        dispatch(updateUser(updatedUser))
-        setIsActive(!isActive)
+            dispatch(updateUser(updatedUser))
+            setIsActive(!isActive)
+        }
+        
     }
 
     const updateAdmin = () => {
-        const updatedUser = user
-        updatedUser.isAdmin = !isAdmin
+        if (window.confirm('Are you sure?')) {
+            const updatedUser = user
+            updatedUser.isAdmin = !isAdmin
 
-        dispatch(updateUser(updatedUser))
-        setIsAdmin(!isAdmin)
+            dispatch(updateUser(updatedUser))
+            setIsAdmin(!isAdmin)
+        }
     }
 
     const activeHandler = param => () => {
@@ -147,7 +152,7 @@ const UserInfoScreen = ({ match, history }) => {
             </Link>
 
             <h1 style={{ textAlign:'center' }}>{user.name}</h1>
-            <Card className='m-auto demon-card' style={{ width: '14rem' }} />
+            <Card className='m-auto demon-card' style={{ width: '15rem' }} />
 
             {loadingUpdate ? (
                 <div style={{ textAlign:'center', marginTop:'-20px' }}>updating...</div>
@@ -159,23 +164,23 @@ const UserInfoScreen = ({ match, history }) => {
                         <Form style={{ marginTop:'-20px' }}>
                             <Row className='justify-content-center'>
                                 <Col xs={3} md={2} lg={1}>
-                                <Form.Group controlId='isMuballigh'>
-                                    <Form.Check
-                                        type='checkbox'
-                                        label='Active'
-                                        checked={isActive}
-                                        onChange={updateActive}
-                                        custom
-                                    />
-                                    </Form.Group>
-                                </Col>
-                                <Col xs='auto'>
-                                <Form.Group controlId='isMuballigh'>
+                                    <Form.Group controlId='isAdmin'>
                                     <Form.Check
                                         type='checkbox'
                                         label='Admin'
                                         checked={isAdmin}
                                         onChange={updateAdmin}
+                                        custom
+                                    />
+                                    </Form.Group>
+                                </Col>
+                                <Col xs='auto'>
+                                    <Form.Group controlId='isActive'>
+                                    <Form.Check
+                                        type='checkbox'
+                                        label='Active as Generus'
+                                        checked={isActive}
+                                        onChange={updateActive}
                                         custom
                                     />
                                     </Form.Group>

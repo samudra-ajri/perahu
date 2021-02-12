@@ -180,16 +180,23 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
+    const activeOnly = req.query.activeonly
+    && req.query.activeonly === 'true'
+    ? {
+        isActive: true
+    }
+    : {} 
+
     const keyword = req.query.keyword
     ? {
         klp: {
-          $regex: req.query.keyword,
-          $options: 'i',
+            $regex: req.query.keyword,
+            $options: 'i',
         },
-      }
+    }
     : {}
 
-    const users = await User.find({ ...keyword }).sort({ isActive: -1, name: 1 })
+    const users = await User.find({ ...keyword, ...activeOnly }).sort({ isActive: -1, name: 1 })
     res.json(users)
 })
 
@@ -280,7 +287,7 @@ const updateUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/top
 // @access  Public
 const getTopUsers = asyncHandler(async (req, res) => {
-    const products = await User.find({ 'isMuballigh': false }).sort({ poin: -1 }).limit(5)
+    const products = await User.find({ 'isMuballigh': false, 'isActive': true }).sort({ poin: -1 }).limit(5)
   
     res.json(products)
 })

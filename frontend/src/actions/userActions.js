@@ -288,7 +288,7 @@ export const listUserRanked = () => async (dispatch) => {
   }
 }
 
-export const listUsers = (keyword = '') => async (dispatch, getState) => {
+export const listUsers = (keyword = '', activeOnly = true) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_LIST_REQUEST,
@@ -304,7 +304,7 @@ export const listUsers = (keyword = '') => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/users?keyword=${keyword}`, config)
+    const { data } = await axios.get(`/api/users?keyword=${keyword}&activeonly=${activeOnly}`, config)
 
     dispatch({
       type: USER_LIST_SUCCESS,

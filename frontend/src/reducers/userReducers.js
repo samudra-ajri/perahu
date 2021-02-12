@@ -36,7 +36,9 @@ import {
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
-    USER_UPDATE_RESET
+    USER_UPDATE_RESET,
+    USER_LIST_ACTIVEONLY_ON,
+    USER_LIST_ACTIVEONLY_OFF
 } from "../constans/userConstans"
 
 export const userLoginReducer = (state = {}, action) => {
@@ -150,6 +152,17 @@ export const userListReducer = (state = {}, action) => {
             return { loading: false, error: action.payload }
         case USER_LIST_RESET:
             return {}
+        default:
+            return state
+    }
+}
+
+export const userListActiveOnlyReducer = (state = { activeOnly: true }, action) => {
+    switch (action.type) {
+        case USER_LIST_ACTIVEONLY_ON:
+            return { activeOnly: true }
+        case USER_LIST_ACTIVEONLY_OFF:
+            return { activeOnly: false }
         default:
             return state
     }

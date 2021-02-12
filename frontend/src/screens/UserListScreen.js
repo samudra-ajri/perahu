@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Card, Row, Col, Form } from 'react-bootstrap'
+import { Table, Button, Card, Row, Col, Form, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listUsers, deleteUser } from '../actions/userActions'
 import moment from 'moment'
 import 'moment/locale/id'
-import { USER_DELETE_RESET } from '../constans/userConstans'
+import { USER_DELETE_RESET, USER_LIST_ACTIVEONLY_OFF } from '../constans/userConstans'
 
 const UserListScreen = ({ match, history }) => {
     const keyword = match.params.keyword
@@ -16,6 +16,9 @@ const UserListScreen = ({ match, history }) => {
 
     const userList = useSelector((state) => state.userList)
     const { loading, error, users, klp } = userList
+
+    const userListActiveOnly = useSelector((state) => state.userListActiveOnly)
+    const { activeOnly } = userListActiveOnly
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
@@ -34,24 +37,25 @@ const UserListScreen = ({ match, history }) => {
     useEffect(() => {
 
         if (userInfo && userInfo.isAdmin) {
-            if(!users || successDelete) {
+            if(!users || successDelete || activeOnly) {
+                dispatch({ type: USER_LIST_ACTIVEONLY_OFF })
                 dispatch({ type: USER_DELETE_RESET })
-                dispatch(listUsers(keyword))
+                dispatch(listUsers(keyword, false))
             } else {
                 const year = (birthdate) => moment().diff(moment(birthdate), 'year')
-                setRemajaCount((users.filter((user)=>(year(user.birthdate) > 14))).length)
-                setPraremajaCount((users.filter((user)=>((year(user.birthdate) > 11) && (year(user.birthdate) <= 14))).length))
-                setRawitCount((users.filter((user)=>(year(user.birthdate) <= 11))).length)
+                setRemajaCount((users.filter((user)=>(year(user.birthdate) > 14 && user.isActive))).length)
+                setPraremajaCount((users.filter((user)=>((year(user.birthdate) > 11 && user.isActive) && (year(user.birthdate) <= 14))).length))
+                setRawitCount((users.filter((user)=>(year(user.birthdate) <= 11 && user.isActive))).length)
 
-                setMaleCount((users.filter((user)=>(user.sex === 'l'))).length)
-                setFemaleCount((users.filter((user)=>(user.sex === 'p'))).length)
+                setMaleCount((users.filter((user)=>(user.sex === 'l' && user.isActive))).length)
+                setFemaleCount((users.filter((user)=>(user.sex === 'p' && user.isActive))).length)
 
                 setSearchKlp(klp)
             }
         } else {
             history.push('/login')
         }
-    }, [dispatch, history, successDelete, userInfo, users, keyword, klp])
+    }, [dispatch, history, successDelete, userInfo, users, keyword, klp, activeOnly])
 
     const calculateClass = (user) => {
         const year = moment().diff(moment(user.birthdate), 'year')
@@ -79,8 +83,10 @@ const UserListScreen = ({ match, history }) => {
         setSearchKlp(e.target.value)
     }
 
+    console.log(users, activeOnly)
+
     return (
-        <>
+        <Container>
             <h1 style={{textAlign:'center'}}>Users</h1>
             <Card className='m-auto demon-card' style={{ width: '13rem' }} />
 
@@ -88,7 +94,7 @@ const UserListScreen = ({ match, history }) => {
                 <Loader pos='auto'/>
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
-            ) : (
+            ) : !activeOnly && (
                 <>
                 <Row>
                     <Col xs={5} sm={4} md={3} xl={2}>
@@ -109,6 +115,9 @@ const UserListScreen = ({ match, history }) => {
                             </Form.Group>
                         </Form>
                     </Col>
+                </Row>
+                <Row className='pt-1 px-3'>
+                    <strong>Active Users :</strong>
                 </Row>
                 <Row className='pt-1 pb-3 px-3'>
                     <Col xs={4} sm={3} md={2} lg={2} xl={1}>
@@ -229,7 +238,7 @@ const UserListScreen = ({ match, history }) => {
                 </Table>
                 </>
             )}
-        </>
+        </Container>
     )
 }
 

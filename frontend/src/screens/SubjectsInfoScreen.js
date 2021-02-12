@@ -9,6 +9,7 @@ import ChartUserSubject from '../components/ChartUserSubject';
 import { listUsers } from '../actions/userActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { USER_LIST_ACTIVEONLY_ON } from '../constans/userConstans';
 
 const SubjectsInfoScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -18,6 +19,9 @@ const SubjectsInfoScreen = ({ history }) => {
 
     const userList = useSelector((state) => state.userList)
     const { loading, error, users, klp } = userList
+
+    const userListActiveOnly = useSelector((state) => state.userListActiveOnly)
+    const { activeOnly } = userListActiveOnly
 
     const [focus, setFocus] = useState('main')
 
@@ -29,7 +33,8 @@ const SubjectsInfoScreen = ({ history }) => {
 
     useEffect(() => {
         if (userInfo && userInfo.isAdmin) {
-            if (!users) {
+            if (!users || !activeOnly) {
+                dispatch({ type: USER_LIST_ACTIVEONLY_ON })
                 dispatch(listUsers(searchKlp))
             } else {
                 let mainTotal = 0
@@ -37,13 +42,15 @@ const SubjectsInfoScreen = ({ history }) => {
                 let memoryTotal = 0
 
                 users.forEach(user => {
-                    user.subjects.forEach( userSubject => {
-                        mainTotal += userSubject.poinCompleted
-                    })
-
-                    extraTotal += user.subjectsExtra.length
-
-                    memoryTotal += (user.subjectsSurat.length + user.subjectsDoa.length + user.subjectsDalil.length)
+                    if (user.isActive) {
+                        user.subjects.forEach( userSubject => {
+                            mainTotal += userSubject.poinCompleted
+                        })
+                        
+                        extraTotal += user.subjectsExtra.length
+                        
+                        memoryTotal += (user.subjectsSurat.length + user.subjectsDoa.length + user.subjectsDalil.length)
+                    }
                 })
 
                 setMainTotalProgressCount(mainTotal/(2208*users.length+0.00001)*100)
@@ -55,7 +62,7 @@ const SubjectsInfoScreen = ({ history }) => {
         } else {
             history.push('/login')
         }
-    }, [history, userInfo, dispatch, users, searchKlp, klp])
+    }, [history, userInfo, dispatch, users, searchKlp, klp, activeOnly])
 
     const searchKlpHandler = (e) => {
         dispatch(listUsers(e.target.value))
@@ -65,13 +72,13 @@ const SubjectsInfoScreen = ({ history }) => {
     return (
         <Router>
             <h1 style={{textAlign:'center'}}>SUBJECTS MAP</h1>
-            <Card className='m-auto demon-card' style={{ width: '13rem' }} />
+            <Card className='m-auto demon-card' style={{ width: '14rem' }} />
 
             {loading ? (
                 <Loader pos='auto'/>
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
-            ) : (
+            ) : activeOnly && (
                 <>
                 <Container>
                     <Row>
