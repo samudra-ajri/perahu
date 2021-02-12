@@ -8,7 +8,7 @@ import ProgressSubtitle from '../components/ProgressSubtitle'
 import SubjectMainGrid from '../components/SubjectMainGrid'
 import { subjectsDataMain } from '../data/subjectsData'
 
-const SubjectMainUser = ({ match, history }) => {
+const SubjectsMainUser = ({ match, history }) => {
     const userId = match.params.id
 
     const dispatch = useDispatch()
@@ -110,4 +110,4 @@ const SubjectMainUser = ({ match, history }) => {
     )
 }
 
-export default SubjectMainUser
+export default SubjectsMainUser

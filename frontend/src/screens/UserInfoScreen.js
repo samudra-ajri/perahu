@@ -7,9 +7,9 @@ import ChartUserSubject from '../components/ChartUserSubject'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { USER_LIST_RESET, USER_UPDATE_RESET } from '../constans/userConstans'
-import SubjectExtraUser from './SubjectExtraUser'
-import SubjectMainUser from './SubjectMainUser'
-import SubjectMemoryUser from './SubjectMemoryUser'
+import SubjectsExtraUser from './SubjectsExtraUser'
+import SubjectsMainUser from './SubjectsMainUser'
+import SubjectsMemoryUser from './SubjectsMemoryUser'
 
 const UserInfoScreen = ({ match, history }) => {
     const userId = match.params.id
@@ -144,10 +144,10 @@ const UserInfoScreen = ({ match, history }) => {
                 </> 
             )}
 
-            <Route path='/admin/user/:id/info/main' component={SubjectMainUser} exact/>
-            <Route path='/admin/user/:id/info/extra' component={SubjectExtraUser} exact/>
-            <Route path='/admin/user/:id/info/memory' component={SubjectMemoryUser} exact/>
-            <Route path='/admin/user/:id/info' component={SubjectMainUser} exact />
+            <Route path='/admin/user/:id/info/main' component={SubjectsMainUser} exact/>
+            <Route path='/admin/user/:id/info/extra' component={SubjectsExtraUser} exact/>
+            <Route path='/admin/user/:id/info/memory' component={SubjectsMemoryUser} exact/>
+            <Route path='/admin/user/:id/info' component={SubjectsMainUser} exact />
         </Route>
     )
 }

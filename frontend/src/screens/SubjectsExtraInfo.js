@@ -76,8 +76,8 @@ const SubjectsExtraInfo = ({ history }) => {
                         <Col>
                             <MapSubjectExtraGrid
                                 data={subjectsDataExtra}
-                                progress={subjectsProgress || 0} 
-                                userCount={usersCount}
+                                progress={subjectsProgress} 
+                                userCount={usersCount || 0}
                             />
                         </Col>
                     </Row>

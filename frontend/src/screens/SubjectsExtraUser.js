@@ -8,7 +8,7 @@ import ProgressSubtitle from '../components/ProgressSubtitle'
 import SubjectExtraGrid from '../components/SubjectExtraGrid'
 import { subjectsDataExtra } from '../data/subjectsData'
 
-const SubjectExtraUser = ({ match, history}) => {
+const SubjectsExtraUser = ({ match, history}) => {
     const userId = match.params.id
 
     const dispatch = useDispatch()
@@ -66,4 +66,4 @@ const SubjectExtraUser = ({ match, history}) => {
     )
 }
 
-export default SubjectExtraUser
+export default SubjectsExtraUser
