@@ -33,7 +33,7 @@ const SubjectsMemoryScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         } else {
-            if (!user || !user.name || successExtraSubject) {
+            if (!user || !user.name || successExtraSubject || (user._id !== userInfo._id)) {
                 dispatch({ type: USER_ADD_EXTRA_SUBJECT_RESET })
                 dispatch({ type: USER_LIST_RESET })
                 dispatch(getUserDetails('profile'))

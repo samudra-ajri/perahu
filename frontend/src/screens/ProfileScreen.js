@@ -24,7 +24,7 @@ const ProfileScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         } else {
-            if (!user || !user.name ) {
+            if (!user || !user.name || (user._id !== userInfo._id)) {
                 dispatch(getUserDetails('profile'))
             } else {
                 dispatch(listUserRanked())

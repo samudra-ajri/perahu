@@ -31,7 +31,7 @@ const SubjectsMainScreen = ({ history }) => {
         if (!userInfo) {
             history.push('/login')
         } else {
-            if (!user || !user.name || successUserSubject) {
+            if (!user || !user.name || successUserSubject || (user._id !== userInfo._id)) {
                 dispatch({ type: USER_ADD_SUBJECT_RESET })
                 dispatch({ type: USER_LIST_RESET })
                 dispatch(getUserDetails('profile'))
