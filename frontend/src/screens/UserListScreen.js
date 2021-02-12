@@ -83,8 +83,6 @@ const UserListScreen = ({ match, history }) => {
         setSearchKlp(e.target.value)
     }
 
-    console.log(users, activeOnly)
-
     return (
         <Container>
             <h1 style={{textAlign:'center'}}>Users</h1>

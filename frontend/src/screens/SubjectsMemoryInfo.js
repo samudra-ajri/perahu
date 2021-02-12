@@ -44,7 +44,7 @@ const SubjectsMemoryInfo = ({ history }) => {
                 setDalilCount((dalilCount/(subjectsDataDalil.length*users.length+0.000001)*100).toFixed(2))
             }
         } else {
-            history.push('/admin/subjects')
+            history.push('/login')
         }
     }, [history, dispatch, users, userInfo])
 

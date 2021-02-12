@@ -51,7 +51,7 @@ const SubjectsExtraInfo = ({ history }) => {
                 setUsersCount(users.length)
             }
         } else {
-            history.push('/admin/subjects')
+            history.push('/login')
         }
     }, [history, dispatch, users, userInfo])
 
@@ -67,7 +67,8 @@ const SubjectsExtraInfo = ({ history }) => {
                         <Col>
                             <ProgressSubtitle 
                                 title='Extra' 
-                                count={subjectsCount} 
+                                count={subjectsCount}
+                                active={'Extra'}
                             />
                         </Col>
                     </Row>

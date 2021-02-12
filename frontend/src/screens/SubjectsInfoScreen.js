@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import { Card, Col, Container, Form, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import SubjectsMainInfo from './SubjectsMainInfo'
 import SubjectsExtraInfo from './SubjectsExtraInfo'
 import SubjectsMemoryInfo from './SubjectsMemoryInfo'
-import ChartUserSubject from '../components/ChartUserSubject';
-import { listUsers } from '../actions/userActions';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import { USER_LIST_ACTIVEONLY_ON } from '../constans/userConstans';
+import ChartUserSubject from '../components/ChartUserSubject'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import { listUsers } from '../actions/userActions'
+import { USER_LIST_ACTIVEONLY_ON } from '../constans/userConstans'
 
 const SubjectsInfoScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -102,14 +102,15 @@ const SubjectsInfoScreen = ({ history }) => {
                         </Col>
                     </Row>
                 </Container>
+                
                 <Row className='justify-content-center py-3'>
-                    <Col as={Link} to='/admin/subjects/main' xs={3} onClick={(e) => setFocus('main')} className={focus==='main' ? 'chart-subject-focused' : 'chart-subject'}>
+                    <Col as={Link} to='/admin/subjects/main' xs={3} onClick={() => setFocus('main')} className={focus==='main' ? 'chart-subject-focused' : 'chart-subject'}>
                         <ChartUserSubject title='Main Subjects' data={[mainTotalProgressCount.toFixed(2), (100.00-mainTotalProgressCount).toFixed(2)]} />
                     </Col>
-                    <Col as={Link} to='/admin/subjects/extra' xs={3} onClick={(e) => setFocus('extra')} className={focus==='extra' ? 'chart-subject-focused' : 'chart-subject'}>
+                    <Col as={Link} to='/admin/subjects/extra' xs={3} onClick={() => setFocus('extra')} className={focus==='extra' ? 'chart-subject-focused' : 'chart-subject'}>
                         <ChartUserSubject title='Extra Subjects' data={[extraTotalProgressCount.toFixed(2), (100.00-extraTotalProgressCount).toFixed(2)]} />
                     </Col>
-                    <Col as={Link} to='/admin/subjects/memory' xs={3} onClick={(e) => setFocus('memory')} className={focus==='memory' ? 'chart-subject-focused' : 'chart-subject'}>
+                    <Col as={Link} to='/admin/subjects/memory' xs={3} onClick={() => setFocus('memory')} className={focus==='memory' ? 'chart-subject-focused' : 'chart-subject'}>
                         <ChartUserSubject title='Memory Subjects' data={[memoryTotalProgressCount.toFixed(2), (100.00-memoryTotalProgressCount).toFixed(2)]} />
                     </Col>
                 </Row>

@@ -1,90 +1,69 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { listUsers } from '../actions/userActions'
+import { getUserDetails } from '../actions/userActions'
 import Loader from '../components/Loader'
-import MapSubjectMainGrid from '../components/MapSubjectMainGrid'
 import Message from '../components/Message'
 import ProgressSubtitle from '../components/ProgressSubtitle'
+import SubjectMainGrid from '../components/SubjectMainGrid'
 import { subjectsDataMain } from '../data/subjectsData'
 
-const SubjectsMainInfo = ({ history }) => {
+const SubjectMainUser = ({ match, history }) => {
+    const userId = match.params.id
+
     const dispatch = useDispatch()
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
 
-    const userList = useSelector((state) => state.userList)
-    const { loading, error, users } = userList
+    const userDetails = useSelector((state) => state.userDetails)
+    const { loading, error, user } = userDetails
 
     const [active, setActive] = useState('')
 
     const [subjectsCount, setSubjectsCount] = useState({})
-    const [subjectsProgress, setSubjectsProgress] = useState({})
-
-    const [usersCount, setUsersCount] = useState(0)
+    const [subjectProgress, setSubjectProgress] = useState([])
 
     useEffect(() => {
         if (userInfo && userInfo.isAdmin) {
-            const subjectsCount = {}
-
-            subjectsDataMain.forEach(subject => {
-                subjectsCount[subject.name] = 0
-            })
-
-            if (!users) {
-                dispatch(listUsers())
+            if (!user.name) {
+                dispatch(getUserDetails(userId))
             } else {
-                subjectsDataMain.forEach(subject => {
-                    users.forEach(user => {
-                        user.subjects.some(userSubject => {
-                            if (subject.name === userSubject.name) {
-                                subjectsCount[subject.name] += userSubject.poinCompleted
-                            }
-                            return subject.name === userSubject.name
-                        })
-                    })
-                    subjectsCount[subject.name] = (subjectsCount[subject.name]/(subject.target*users.length+0.000001)*100).toFixed(2)
-                })
-                
-                setUsersCount(users.length+0.000001)
-            }
+                const subjectsCount = {}
 
-            setSubjectsCount(subjectsCount)
+                subjectsDataMain.forEach(subject => {
+                    subjectsCount[subject.name] = 0
+                })
+
+                subjectsDataMain.forEach(subject => {
+                    user.subjects.some(userSubject => {
+                        if (subject.name === userSubject.name) {
+                            subjectsCount[subject.name] = (userSubject.poinCompleted/subject.target*100).toFixed(2)
+                        }
+                        return subject.name === userSubject.name
+                    })
+                })
+
+                setSubjectsCount(subjectsCount)
+            }
         } else {
             history.push('/login')
         }
-    }, [history, dispatch, users, userInfo])
+    }, [dispatch, history, userInfo, userId, user])
 
     const activeHandler = param => () => {
         if (active === param) {
             setActive('')
         } else {
             setActive(param)
-            setSubjectsProgress({})
+            setSubjectProgress([])
 
-            const pages = {}
-            subjectsDataMain.some(subject => {
-                if (subject.name === param) {
-                    for (let i = 0; i < subject.target; i++) {
-                        pages[i+1] = 0
-                    }
+            user.subjects.some(userSubject => {
+                if (userSubject.name === param) {
+                    setSubjectProgress(userSubject.completed)
                 }
-                return subject.name === param
+                return userSubject.name === param
             })
-
-            users.forEach(user => {
-                user.subjects.some(userSubject => {
-                    if (userSubject.name === param) {
-                        userSubject.completed.forEach(page => {
-                            pages[page] += 1  
-                        })
-                    }
-                    return userSubject.name === param
-                })
-            })
-
-            setSubjectsProgress(pages)
         }
     }
 
@@ -114,10 +93,10 @@ const SubjectsMainInfo = ({ history }) => {
                                 {active === subject.name && 
                                     <Row>
                                         <Col>
-                                            <MapSubjectMainGrid
-                                                data={Array.from(Array(subject.target).keys())}
-                                                progress={subjectsProgress} 
-                                                userCount={usersCount}
+                                            <SubjectMainGrid 
+                                                data={Array.from(Array(subject.target).keys())} 
+                                                progress={subjectProgress} 
+                                                disabled={true}
                                             />
                                         </Col>
                                     </Row>
@@ -131,4 +110,4 @@ const SubjectsMainInfo = ({ history }) => {
     )
 }
 
-export default SubjectsMainInfo
+export default SubjectMainUser
