@@ -176,11 +176,9 @@ const UserListScreen = ({ match, history }) => {
                             <th>Klp</th>
                             <th>Sex</th>
                             <th>Class</th>
-                            <th>Main (%)</th>
-                            <th>Extra (%)</th>
-                            <th>Memory (%)</th>
                             <th>Active</th>
                             <th>Admin</th>
+                            <th>Last Updated</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -196,9 +194,6 @@ const UserListScreen = ({ match, history }) => {
                             <td>{(user.klp).toUpperCase()}</td>
                             <td>{user.sex === 'l' ? 'Male' : 'Female'}</td>
                             <td>{calculateClass(user)}</td>
-                            <td>{(user.subjects.reduce((acc, subject) => acc + subject.poinCompleted, 0)/2208*100).toFixed(1)}</td>
-                            <td>{(user.subjectsExtra.length/14*100).toFixed(1)}</td>
-                            <td>{((user.subjectsSurat.length + user.subjectsDoa.length + user.subjectsDalil.length)/74*100).toFixed(1)}</td>
                             <td>
                                 {user.isActive ? (
                                     <i className='fas fa-check' style={{ color: 'green' }}></i>
@@ -213,6 +208,7 @@ const UserListScreen = ({ match, history }) => {
                                     <i className='fas fa-times' style={{ color: 'red' }}></i>
                                 )}
                             </td>
+                            <td>{moment(user.updatedAt).format('L')} {moment(user.updatedAt).locale('en').format('LTS')}</td>
                             <td style={{ textAlign:'right' }}>
                                 <LinkContainer to={`/admin/user/${user._id}/info`}>
                                     <Button variant='light' className='btn-sm'>

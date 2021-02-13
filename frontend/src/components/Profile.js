@@ -38,7 +38,7 @@ const Profile = ({ user }) => {
                         <strong>Email:</strong> {user.email}
                     </p>
                     <p>
-                        <strong>Birthdate:</strong> {moment(user.birthdate).locale('id').format('ll')}
+                        <strong>Birthdate:</strong> {moment(user.birthdate).locale('en').format('ll')}
                     </p>
                     <p>
                         <strong>Sex:</strong> {user.sex === 'l' ? 'male' : 'female'}
