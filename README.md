@@ -2,7 +2,7 @@
 
 > Information system platform built with the MERN stack & Redux.
 
-This project called as Perahu (Pemetaan Genarasi Margahayu) was built as my freelance order from Miftahul Huda Alfirdausy Foundation.
+This project called as Perahu (Pemetaan Genarasi Margahayu) was built as my freelance order for Miftahul Huda Alfirdausy Foundation.
 ![screenshot](https://github.com/samudra-ajri/perahu/blob/master/frontend/public/screenshot.png)
 
 ## Features
