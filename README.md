@@ -1,4 +1,4 @@
-# ProShop eCommerce Platform
+# Simple Information System Platform
 
 > Information system platform built with the MERN stack & Redux.
 
