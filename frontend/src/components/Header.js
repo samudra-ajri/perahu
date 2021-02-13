@@ -29,7 +29,15 @@ const Header = () => {
                     <Navbar.Brand onClick={showSidebarHandler}><i className='fas fa-bars sidebar-button'></i></Navbar.Brand>
                 )}
                 <LinkContainer to='/'>
-                    <Navbar.Brand><strong>Perahu</strong></Navbar.Brand>
+                    <Navbar.Brand>
+                        <img
+                            src='/perahu.png'
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />{' '}
+                        <strong>Perahu</strong>
+                    </Navbar.Brand>
                 </LinkContainer>
                 
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
