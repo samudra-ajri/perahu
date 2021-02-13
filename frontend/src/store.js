@@ -2,7 +2,8 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { 
-    sidebarShowReducer 
+    sidebarShowReducer,
+    sidebarFocusReducer,
 } from './reducers/sidebarReducers'
 import { 
     userLoginReducer,
@@ -20,6 +21,7 @@ import {
 
 const reducer = combineReducers({
     sidebarShow: sidebarShowReducer,
+    sidebarFocus: sidebarFocusReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,

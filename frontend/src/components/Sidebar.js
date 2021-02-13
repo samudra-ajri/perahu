@@ -2,14 +2,36 @@ import React, { useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Row, Col, Nav } from 'react-bootstrap'
 import { sidebarData } from '../data/sidebarData'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { focusSidebar } from '../actions/sidebarActions'
 
 const Sidebar = () => {
-    const [activeBar, setActiveBar] = useState('')
-    const [openBar, setOpenBar] = useState('')
+    const dispatch = useDispatch()
+
+    const sidebarFocus = useSelector((state) => state.sidebarFocus)
+    const { active, open } = sidebarFocus
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
+
+    const [activeBar, setActiveBar] = useState(active)
+    const [openBar, setOpenBar] = useState(open)
+
+    const MainClickHandler = param => () => {
+        setActiveBar(param.name) 
+        
+        if (!param.sub) {
+            setOpenBar(param.name)
+            dispatch(focusSidebar(param.name, param.name))
+        }
+
+    }
+
+    const SubClickHandler = param => () => {
+        setOpenBar(param)
+
+        dispatch(focusSidebar(activeBar, param))
+    }
 
     return (
         <Col xs={5} sm={4} md={3} lg={2}>
@@ -23,7 +45,7 @@ const Sidebar = () => {
                                 <Row 
                                     as={LinkContainer} 
                                     to={main.path} 
-                                    onClick={() => {setActiveBar(main.name); if(!main.sub) setOpenBar(main.name)}}
+                                    onClick={MainClickHandler(main)}
                                     className={openBar === main.name ? 'clicked' : 'sidebar-menu'} 
                                 >
                                     <Nav.Link>
@@ -40,7 +62,7 @@ const Sidebar = () => {
                                                 key={sub.name}
                                                 as={LinkContainer} 
                                                 to={sub.path} 
-                                                onClick={() => {setOpenBar(sub.name)}}
+                                                onClick={SubClickHandler(sub.name)}
                                                 >
                                                 <Nav.Link>
                                                     <i className={`sidebar-icon ${sub.icon}`}></i>{sub.name}
