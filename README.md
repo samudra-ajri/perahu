@@ -9,6 +9,7 @@ This project called as Perahu (Pemetaan Genarasi Margahayu) was built as my free
 
 - User authentication and authorization
 - Top ranked users
+- Sidebar
 - Filtering users by category
 - User profile
 - Subjects completion per users
