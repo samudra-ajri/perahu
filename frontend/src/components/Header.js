@@ -31,6 +31,7 @@ const Header = () => {
                 <LinkContainer to='/'>
                     <Navbar.Brand>
                         <img
+                            alt='perahu.png'
                             src='/perahu.png'
                             width="30"
                             height="30"
