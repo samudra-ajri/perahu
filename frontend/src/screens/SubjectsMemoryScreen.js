@@ -22,7 +22,7 @@ const SubjectsMemoryScreen = ({ history }) => {
     const userExtraSubjectAdd = useSelector((state) => state.userExtraSubjectAdd)
     const { success: successExtraSubject, error: errorExtraSubject } = userExtraSubjectAdd
 
-    const [active, setActive] = useState([])
+    const [active, setActive] = useState('')
     const [totalProgress, setTotalProgress] = useState([])
     const [totalProgressCount, setTotalProgressCount] = useState([])
     const [suratCount, setSuratCount] = useState(0)

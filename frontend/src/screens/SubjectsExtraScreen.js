@@ -8,6 +8,7 @@ import { USER_ADD_EXTRA_SUBJECT_RESET, USER_LIST_RESET } from '../constans/userC
 import ProgressTitle from '../components/ProgressTitle'
 import ProgressButtons from '../components/ProgressButtons'
 import SubjectExtraGrid from '../components/SubjectExtraGrid'
+import ProgressSubtitle from '../components/ProgressSubtitle'
 
 const SubjectsExtraScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -24,6 +25,8 @@ const SubjectsExtraScreen = ({ history }) => {
     const [totalProgress, setTotalProgress] = useState([])
     const [totalProgressCount, setTotalProgressCount] = useState([])
 
+    const [active, setActive] = useState('')
+
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
@@ -34,10 +37,19 @@ const SubjectsExtraScreen = ({ history }) => {
                 dispatch(getUserDetails('profile'))
             } else {
                 setTotalProgressCount((user.subjectsExtra.length/14*100).toFixed(2))
-                setTotalProgress(user.subjectsExtra)
             }
         }
     }, [dispatch, userInfo, user, successExtraSubject, history])
+
+    const activeHandler = param => () => {
+        if (active === param) {
+            setActive('')
+        } else {
+            setActive(param)
+            setTotalProgress(user.subjectsExtra)
+        }
+        
+    }
 
     const clickHandler = (e) => {
         if (!totalProgress.includes(e.target.id)) {
@@ -48,6 +60,8 @@ const SubjectsExtraScreen = ({ history }) => {
                     subjects: [...totalProgress, e.target.id]
                 }
             ))
+
+            setTotalProgress([...totalProgress, e.target.id])
         } else {
             dispatch(addUserExtraSubject(
                 user._id, 
@@ -56,6 +70,7 @@ const SubjectsExtraScreen = ({ history }) => {
                     subjects: totalProgress.filter((target)=>(target !== e.target.id))
                 }
             ))
+            setTotalProgress(totalProgress.filter((target)=>(target !== e.target.id)))
         }
     }
 
@@ -67,6 +82,8 @@ const SubjectsExtraScreen = ({ history }) => {
                 subjects: subjectsDataExtra.map(a => a.name)
             }
         ))
+
+        setTotalProgress(subjectsDataExtra.map(a => a.name))
     }
 
     const resetButtonHandler = () => {
@@ -77,6 +94,8 @@ const SubjectsExtraScreen = ({ history }) => {
                 subjects: []
             }
         ))
+
+        setTotalProgress([])
     }
 
     return (
@@ -95,24 +114,37 @@ const SubjectsExtraScreen = ({ history }) => {
                     </Col>
                 </Row>
 
-                <Row className='pb-2'>
+                <Row className='py-2 progress-title' onClick={activeHandler('extra')}>
                     <Col>
-                        <ProgressButtons 
-                            finishAction={finishButtonHandler} 
-                            resetActoin={resetButtonHandler} 
-                            loading={loading}
-                        />
+                        <ProgressSubtitle 
+                        title={'extra'} 
+                        count={totalProgressCount} 
+                        active={active} />
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <SubjectExtraGrid 
-                            data={subjectsDataExtra} 
-                            progress={totalProgress} 
-                            action={clickHandler}
-                        />
-                    </Col>
-                </Row>
+
+                {active === 'extra' &&
+                    <>
+                    <Row className='pb-2'>
+                        <Col>
+                            <ProgressButtons 
+                                finishAction={finishButtonHandler} 
+                                resetActoin={resetButtonHandler} 
+                                loading={loading}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <SubjectExtraGrid 
+                                data={subjectsDataExtra} 
+                                progress={totalProgress} 
+                                action={clickHandler}
+                            />
+                        </Col>
+                    </Row>
+                    </>
+                }
                 </>
             )}
         </Container>
