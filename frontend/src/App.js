@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -16,10 +16,19 @@ import SubjectsMemoryScreen from './screens/SubjectsMemoryScreen'
 import UserListScreen from './screens/UserListScreen'
 import UserInfoScreen from './screens/UserInfoScreen'
 import SubjectsInfoScreen from './screens/SubjectsInfoScreen'
+import { showSidebar } from './actions/sidebarActions';
 
 function App() {
+
+  const dispatch = useDispatch()
+
   const sidebarShow = useSelector(state => state.sidebarShow)
   const { sidebar } = sidebarShow
+
+  const onClickHandler = () => {
+    (sidebar === true) && (window.innerWidth <= 480)
+      && dispatch(showSidebar(!sidebar))
+  }
 
   return (
 		<Router>
@@ -28,7 +37,7 @@ function App() {
         <Container fluid>
           <Row>
             {sidebar && <Sidebar />}
-            <Col className='py-3'>
+            <Col className='py-3' onClick={onClickHandler}>
                 <Route path='/login' component={LoginScreen} />
                 <Route path='/register' component={RegisterScreen} />
                 <Route path='/completion/main' component={SubjectsMainScreen} />

@@ -5,7 +5,6 @@ import Message from '../components/Message'
 import { subjectsDataExtra } from '../data/subjectsData'
 import { addUserExtraSubject, getUserDetails } from '../actions/userActions'
 import { USER_ADD_EXTRA_SUBJECT_RESET, USER_LIST_RESET } from '../constans/userConstans'
-import ProgressTitle from '../components/ProgressTitle'
 import ProgressButtons from '../components/ProgressButtons'
 import SubjectExtraGrid from '../components/SubjectExtraGrid'
 import ProgressSubtitle from '../components/ProgressSubtitle'
@@ -101,19 +100,13 @@ const SubjectsExtraScreen = ({ history }) => {
     return (
         <Container className='px-3'>
             <h1 style={{textAlign:'center'}}>EXTRA SUBJECTS</h1>
-            <Card className='m-auto demon-card' style={{ width: '13rem' }} />
+            <Card className='m-auto demon-card' style={{ width: '15rem' }} />
 
             {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
             { error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
                 <>
-                <Row>
-                    <Col>
-                        <ProgressTitle title='TOTAL PROGRESS' count={totalProgressCount}/>
-                    </Col>
-                </Row>
-
                 <Row className='py-2 progress-title' onClick={activeHandler('extra')}>
                     <Col>
                         <ProgressSubtitle 

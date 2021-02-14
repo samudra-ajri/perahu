@@ -126,7 +126,7 @@ const SubjectsMemoryScreen = ({ history }) => {
     return (
         <Container className='px-3'>
             <h1 style={{textAlign:'center'}}>MEMORY SUBJECTS</h1>
-            <Card className='m-auto demon-card' style={{ width: '13rem' }} />
+            <Card className='m-auto demon-card' style={{ width: '15rem' }} />
 
             {errorExtraSubject && <Message variant='danger'>{errorExtraSubject}</Message>}
             { error ? (
@@ -135,7 +135,7 @@ const SubjectsMemoryScreen = ({ history }) => {
                 <>
                 <Row>
                     <Col>
-                        <ProgressTitle title='TOTAL PROGRESS' count={totalProgressCount}/>
+                        <ProgressTitle title='Memory Subjects Progress' count={totalProgressCount}/>
                     </Col>
                 </Row>
 

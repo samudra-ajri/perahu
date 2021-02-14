@@ -92,3 +92,9 @@ h2 {
   background-color: #e8eaed;
   cursor: pointer;
 }
+
+@media (max-device-width: 480px) {
+  .sidebar {
+    width: 250px;
+  }
+}
