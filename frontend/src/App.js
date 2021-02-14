@@ -33,11 +33,11 @@ function App() {
   return (
 		<Router>
 			<Header />
-      <main>
         <Container fluid>
           <Row>
             {sidebar && <Sidebar />}
-            <Col className='py-3' onClick={onClickHandler}>
+            <Col className='py-3'>
+              <main onClick={onClickHandler}>
                 <Route path='/login' component={LoginScreen} />
                 <Route path='/register' component={RegisterScreen} />
                 <Route path='/completion/main' component={SubjectsMainScreen} />
@@ -49,10 +49,10 @@ function App() {
                 <Route path='/admin/user/:id/info' component={UserInfoScreen} />
                 <Route path='/admin/subjects' component={SubjectsInfoScreen} />
                 <Route path='/' component={ProfileScreen} exact />
+              </main>
             </Col>
           </Row>
         </Container>
-      </main>
       <Footer />
     </Router>
   )
