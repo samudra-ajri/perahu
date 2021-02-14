@@ -56,6 +56,12 @@ h2 {
 
 .unrounded-button {
   border-radius: 0;
+  width: 3rem;
+  background-color: none;
+}
+
+.btn-outline-success:hover {
+  opacity: 0.5;
 }
 
 .progress-title:hover {

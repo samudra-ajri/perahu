@@ -11,7 +11,6 @@ const SubjectMainGrid = ({ data, progress, action, disabled }) => {
                     size='sm'
                     className='unrounded-button'
                     variant={progress.includes(String(target+1)) ? 'success' : 'outline-success'}
-                    style={{width:'3rem'}}
                     onClick={action}
                     disabled={disabled}
                 >{target+1}</Button>
