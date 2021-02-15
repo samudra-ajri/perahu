@@ -55,7 +55,7 @@ There is a Heroku postbuild script.
 
 ### Seed Database
 
-This commands seed the database with a sample admin user as well as destroy all data.
+These commands seed the database with a sample admin user as well as destroy all data.
 
 ```
 # Import data
