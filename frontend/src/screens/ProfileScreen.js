@@ -52,7 +52,7 @@ const ProfileScreen = ({ history }) => {
                     <Profile user={user} />
                     </Col>
 
-                    <Col lg={4}>
+                    <Col lg={12}>
                         {loadingRanked 
                             ? <Loader pos='auto' /> 
                             : errorRanked 

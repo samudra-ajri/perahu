@@ -7,7 +7,7 @@ export const TopRank = ({ users }) => {
             <h5 style={{textAlign:'center'}} className='mt-3 pt-1 pb-4'>
                 <i style={{ color: '#D5B645' }} 
                     className='fas fa-trophy'
-                ></i> Top 5 Ranked
+                ></i> Top 10 Ranked
             </h5>
             <Table hover size='sm'> 
                 <thead>
@@ -22,9 +22,9 @@ export const TopRank = ({ users }) => {
                     return (
                         <tbody key={i}>
                             <tr>
-                                <td>{i+1}</td>
-                                <td>{user.name}</td>
-                                <td><i style={{ color: '#D5B645' }} className='fas fa-star'></i> {user.poin}</td>
+                                <td><small>{i+1}</small></td>
+                                <td><small>{user.name}</small></td>
+                                <td><small><i style={{ color: '#D5B645' }} className='fas fa-star'></i> {user.poin}</small></td>
                             </tr>
                         </tbody>
                     )

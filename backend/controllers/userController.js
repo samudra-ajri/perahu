@@ -287,7 +287,7 @@ const updateUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/top
 // @access  Public
 const getTopUsers = asyncHandler(async (req, res) => {
-    const products = await User.find({ 'isMuballigh': false, 'isActive': true }).sort({ poin: -1 }).limit(5)
+    const products = await User.find({ 'isMuballigh': false, 'isActive': true }).sort({ poin: -1 }).limit(10)
   
     res.json(products)
 })
