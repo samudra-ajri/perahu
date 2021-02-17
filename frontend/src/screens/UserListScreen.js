@@ -58,12 +58,15 @@ const UserListScreen = ({ match, history }) => {
     }, [dispatch, history, successDelete, userInfo, users, keyword, klp, activeOnly])
 
     const calculateClass = (user) => {
+        let flag = ''
+        user.isMuballigh && (flag = '-Mb')
+
         const year = moment().diff(moment(user.birthdate), 'year')
         
         if (year > 14) {
-            return 'R'
+            return `R${flag}`
         } else if (year > 11) {
-            return 'PR'
+            return `PR${flag}`
         } else {
             return 'CR'
         }
